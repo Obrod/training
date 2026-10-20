@@ -1,0 +1,1200 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#EEF2F4">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0B1620">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Klassikern">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<title>Superklassikern 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Layout: en kolumn (max 560px), nummerlapps-hero med nedräkning, flikfält längst ned och en stor gul loggknapp som alltid ligger inom räckhåll. */
+:root{
+  --bg:#EEF2F4; --surface:#FFFFFF; --surface-2:#E4EBEF; --ink:#0F2233; --ink-2:#4B6070;
+  --line:#D0DAE0; --line-strong:#8FA3B0;
+  --btn:#0F2A43; --btn-ink:#FFFFFF; --yellow:#F2C230; --yellow-ink:#0F2233;
+  --bar:#1F5B8C; --plan-fill:#DCE5EB;
+  --good:#1E6B45; --good-bg:#DFF0E6; --warn:#8A5300; --warn-bg:#FAEFD3; --info:#1F5B8C; --info-bg:#E1ECF5;
+  --lop:#C9482B; --cyk:#5E8C2F; --ski:#2F78B5; --sim:#14A0A6; --str:#7A5FA8; --vil:#8DA0AC;
+  --shadow:0 1px 2px rgba(15,34,51,.06),0 4px 14px rgba(15,34,51,.06);
+  --f-display:'Barlow Condensed','Arial Narrow',system-ui,sans-serif;
+  --f-body:'Barlow',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --tabh:68px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0B1620; --surface:#13222E; --surface-2:#1B2D3B; --ink:#E7EEF3; --ink-2:#9DB1BE;
+    --line:#26394A; --line-strong:#5A7487;
+    --btn:#DDE9F3; --btn-ink:#0B1620; --bar:#6BAEE6; --plan-fill:#1E3445;
+    --good:#6CCB96; --good-bg:#163024; --warn:#EDB955; --warn-bg:#35290F; --info:#7DB9EA; --info-bg:#14293D;
+    --lop:#F0795A; --cyk:#9CCB5E; --ski:#6BAEE6; --sim:#3CC8CE; --str:#AA94DA; --vil:#6B8190;
+    --shadow:none; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0B1620; --surface:#13222E; --surface-2:#1B2D3B; --ink:#E7EEF3; --ink-2:#9DB1BE;
+  --line:#26394A; --line-strong:#5A7487;
+  --btn:#DDE9F3; --btn-ink:#0B1620; --bar:#6BAEE6; --plan-fill:#1E3445;
+  --good:#6CCB96; --good-bg:#163024; --warn:#EDB955; --warn-bg:#35290F; --info:#7DB9EA; --info-bg:#14293D;
+  --lop:#F0795A; --cyk:#9CCB5E; --ski:#6BAEE6; --sim:#3CC8CE; --str:#AA94DA; --vil:#6B8190;
+  --shadow:none; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.45;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:10px 190px;-webkit-tap-highlight-color:transparent}
+body.lock{overflow:hidden}
+.wrap{max-width:560px;margin:0 auto}
+button{font-family:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--info);outline-offset:2px}
+h1,h2,h3,p{margin:0}
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:6px 0 14px}
+.brand{font-family:var(--f-display);font-weight:800;font-size:26px;letter-spacing:.03em;text-transform:uppercase;line-height:1}
+.brand small{display:block;font-family:var(--f-body);font-weight:500;font-size:13px;letter-spacing:.02em;color:var(--ink-2);text-transform:none;margin-top:4px}
+.iconbtn{width:48px;height:48px;border-radius:14px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;cursor:pointer}
+.stack{display:grid;gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow);min-width:0}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-2)}
+.h2{font-family:var(--f-display);font-weight:700;font-size:24px;line-height:1.1;letter-spacing:.01em}
+.sub{color:var(--ink-2);font-size:14px}
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:10px}
+/* bib */
+.bib{position:relative;background:var(--yellow);color:var(--yellow-ink);border-radius:20px;padding:26px 20px 18px;overflow:hidden}
+.bib::before,.bib::after{content:"";position:absolute;top:10px;width:10px;height:10px;border-radius:50%;background:var(--bg)}
+.bib::before{left:16px}.bib::after{right:16px}
+.bib .eyebrow{color:var(--yellow-ink);opacity:.8}
+.bib .rname{font-family:var(--f-display);font-weight:800;font-size:34px;line-height:1;text-transform:uppercase;letter-spacing:.02em;margin-top:4px}
+.bib .count{display:flex;align-items:baseline;gap:10px;margin-top:8px}
+.bib .num{font-family:var(--f-display);font-weight:800;font-size:clamp(72px,24vw,112px);line-height:.85;font-variant-numeric:tabular-nums}
+.bib .unit{font-family:var(--f-display);font-weight:700;font-size:24px;text-transform:uppercase}
+.bib .facts{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:12px;font-weight:600;font-size:15px}
+.bib .prog{height:8px;border-radius:99px;background:rgba(15,34,51,.18);margin-top:14px;overflow:hidden}
+.bib .prog i{display:block;height:100%;background:var(--yellow-ink);border-radius:99px}
+.bib .note{font-size:13px;margin-top:8px;opacity:.85}
+/* buttons */
+.btn{min-height:52px;border-radius:14px;border:1px solid var(--line-strong);background:var(--surface);font-weight:600;font-size:16px;padding:0 18px;cursor:pointer}
+.btn.primary{background:var(--btn);color:var(--btn-ink);border-color:transparent}
+.btn.yellow{background:var(--yellow);color:var(--yellow-ink);border-color:transparent}
+.btn.big{min-height:60px;font-size:18px;width:100%}
+.btn.sm{min-height:44px;font-size:15px;padding:0 14px}
+.btn.danger{border-color:var(--warn);color:var(--warn)}
+.btnrow{display:flex;flex-wrap:wrap;gap:8px}
+.btnrow .btn{flex:1 1 auto}
+/* chips & tags */
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--c,var(--vil));flex:none}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:99px;background:var(--surface-2);color:var(--ink-2)}
+.pill.good{background:var(--good-bg);color:var(--good)}.pill.warn{background:var(--warn-bg);color:var(--warn)}.pill.info{background:var(--info-bg);color:var(--info)}
+.pill.now{background:var(--yellow);color:var(--yellow-ink)}
+/* day rows */
+.days{display:grid;gap:8px}
+.day{display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:12px;align-items:center;width:100%;text-align:left;
+  min-height:64px;padding:10px 12px;border-radius:14px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.day.today{background:color-mix(in srgb,var(--yellow) 22%,var(--surface));border-color:var(--yellow)}
+.day.rest{background:transparent;border-style:dashed}
+.day .dw{font-family:var(--f-display);text-transform:uppercase;font-weight:700;line-height:1;text-align:center}
+.day .dw b{display:block;font-size:20px}
+.day .dw span{font-size:14px;color:var(--ink-2);font-family:var(--f-body);font-weight:500}
+.day .t{font-weight:600;line-height:1.25}
+.day .m{display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px;font-size:14px;color:var(--ink-2);margin-top:2px}
+.day .st{font-size:13px;font-weight:700;text-align:right}
+.st.ok{color:var(--good)}.st.miss{color:var(--warn)}.st.opt{color:var(--ink-2);font-weight:500}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(3,1fr)}
+.stats>div{padding:0 12px;border-left:1px solid var(--line)}
+.stats>div:first-child{padding-left:0;border-left:0}
+.stats b{display:block;font-family:var(--f-display);font-weight:800;font-size:34px;line-height:1;font-variant-numeric:tabular-nums}
+.stats span{font-size:13px;color:var(--ink-2)}
+/* chart */
+.chartbox svg{width:100%;height:auto;display:block}
+.chartbox text{fill:var(--ink-2);font-family:var(--f-body);font-size:10.5px}
+.chartbox .grid{stroke:var(--line);stroke-width:1}
+.chartbox .planned{fill:var(--plan-fill);stroke:var(--line-strong);stroke-width:1}
+.chartbox .actual{fill:var(--bar)}
+.chartbox .curbg{fill:var(--surface-2)}
+.chartbox .sel{fill:none;stroke:var(--ink);stroke-width:1.5}
+.chartbox .cur-l{font-weight:700;fill:var(--ink)}
+.chartbox .raceflag{fill:var(--yellow);stroke:var(--yellow-ink);stroke-width:1}
+.chartnav{display:flex;gap:8px;align-items:center}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--ink-2);margin-top:6px}
+.legend i{display:inline-block;width:14px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.readout{margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--surface-2);font-size:14px}
+/* season */
+.season{position:relative;height:96px;margin:6px 6px 0}
+.season .track{position:absolute;left:0;right:0;top:46px;height:6px;border-radius:9px;background:var(--surface-2)}
+.season .fill{position:absolute;left:0;top:46px;height:6px;border-radius:9px;background:var(--btn)}
+.season .mk{position:absolute;top:40px;width:18px;height:18px;margin-left:-9px;border-radius:50%;background:var(--c);border:3px solid var(--surface)}
+.season .mk span{position:absolute;left:50%;transform:translateX(-50%);font-size:12px;font-weight:600;white-space:nowrap;color:var(--ink)}
+.season .mk.up span{bottom:24px}.season .mk.dn span{top:24px}
+.season .mk.end span{left:auto;right:-4px;transform:none}
+.season .me{position:absolute;top:43px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--yellow);border:2px solid var(--yellow-ink)}
+.rrows{display:grid;gap:0;margin-top:6px}
+.rrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;padding:12px 0;border-top:1px solid var(--line);align-items:center}
+.rrow:first-child{border-top:0}
+.rrow b{font-weight:600}
+.rrow .d{font-family:var(--f-display);font-weight:800;font-size:30px;line-height:1;text-align:right;font-variant-numeric:tabular-nums}
+.rrow .d small{display:block;font-family:var(--f-body);font-weight:500;font-size:12px;color:var(--ink-2)}
+/* plan */
+.blockh{font-family:var(--f-display);font-weight:700;font-size:22px;margin-top:10px}
+.wk{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.wk.cur{border-color:var(--yellow);border-width:2px}
+.wk summary{list-style:none;display:grid;grid-template-columns:62px minmax(0,1fr) auto;gap:12px;align-items:center;min-height:64px;padding:10px 12px;cursor:pointer}
+.wk summary::-webkit-details-marker{display:none}
+.wk .wl b{display:block;font-family:var(--f-display);font-weight:800;font-size:22px;line-height:1}
+.wk .wl span{font-size:12px;color:var(--ink-2)}
+.wk .wr{font-weight:700;font-variant-numeric:tabular-nums;font-size:15px}
+.segs{display:flex;gap:2px;height:8px;margin-top:6px}
+.segs i{display:block;border-radius:3px;min-width:3px}
+.wk .wdays{padding:0 10px 10px}
+.wk.past{opacity:.82}
+.legendline{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--ink-2)}
+.legendline span{display:inline-flex;align-items:center;gap:6px}
+/* log list & coach */
+.logrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;width:100%;text-align:left;padding:14px;border-radius:14px;border:1px solid var(--line);background:var(--surface);cursor:pointer;min-height:64px}
+.logrow .t{font-weight:600}
+.logrow .m{font-size:14px;color:var(--ink-2);margin-top:2px}
+.logrow .n{font-size:14px;margin-top:6px;color:var(--ink)}
+.rpebadge{font-family:var(--f-display);font-weight:800;font-size:26px;line-height:1;text-align:right}
+.rpebadge small{display:block;font-family:var(--f-body);font-size:11px;font-weight:600;color:var(--ink-2);letter-spacing:.06em}
+.fb{border-radius:16px;padding:16px;border:1px solid var(--line);background:var(--surface);display:grid;gap:8px}
+.fb.warn{background:var(--warn-bg);border-color:transparent}.fb.good{background:var(--good-bg);border-color:transparent}.fb.info{background:var(--info-bg);border-color:transparent}
+.fb h3{font-size:18px;font-weight:700;line-height:1.25}
+.fb p{font-size:15px}
+.fb .tag{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.fb.warn .tag{color:var(--warn)}.fb.good .tag{color:var(--good)}.fb.info .tag{color:var(--info)}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{font-size:12px;color:var(--ink-2);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.empty{padding:22px 16px;text-align:center;color:var(--ink-2);border:1px dashed var(--line-strong);border-radius:16px}
+/* bottom nav & fab */
+.fabwrap{position:fixed;left:0;right:0;bottom:calc(var(--tabh) + env(safe-area-inset-bottom,0px) + 12px);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));pointer-events:none;z-index:20}
+.fab{pointer-events:auto;display:flex;align-items:center;justify-content:center;gap:10px;max-width:560px;margin:0 auto;width:100%;
+  min-height:60px;border-radius:18px;border:0;background:var(--yellow);color:var(--yellow-ink);font-weight:700;font-size:19px;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);border-top:1px solid var(--line);
+  padding:6px max(16px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.tabs{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.tab{min-height:56px;border:0;background:transparent;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:12px;font-weight:600;color:var(--ink-2);cursor:pointer}
+.tab[aria-current="page"]{color:var(--ink);background:var(--surface-2)}
+/* sheet */
+.sheetroot{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center}
+.sheetroot[hidden]{display:none!important}
+.backdrop{position:absolute;inset:0;background:rgba(5,12,18,.55)}
+.panel{position:relative;width:100%;max-width:600px;max-height:92%;overflow-y:auto;background:var(--bg);border-radius:22px 22px 0 0;
+  padding:18px max(16px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));display:grid;gap:16px;align-content:start}
+.sh-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.field{display:grid;gap:6px;min-width:0}
+.field>label,.lbl{font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-2)}
+.field input,.field select,.field textarea{width:100%;min-height:52px;border-radius:12px;border:1.5px solid var(--line-strong);background:var(--surface);color:var(--ink);font:500 17px var(--f-body);padding:10px 12px}
+.field textarea{resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:380px){.row2{grid-template-columns:1fr}}
+.stepper{display:grid;grid-template-columns:52px minmax(0,1fr) 52px;gap:6px}
+.stepper button{min-height:52px;border-radius:12px;border:1.5px solid var(--line-strong);background:var(--surface);font-size:24px;font-weight:600;cursor:pointer}
+.stepper input{text-align:center;font-weight:700;font-size:20px}
+.hint{font-size:13px;color:var(--ink-2)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:48px;padding:0 16px;border-radius:99px;border:1.5px solid var(--line-strong);background:var(--surface);font-weight:600;font-size:16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.chip[aria-pressed="true"]{background:var(--btn);color:var(--btn-ink);border-color:var(--btn)}
+.rpe{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.rpe button{min-height:52px;border-radius:12px;border:1.5px solid var(--line-strong);background:var(--surface);font:800 24px var(--f-display);cursor:pointer}
+.rpe button[aria-pressed="true"]{background:var(--btn);color:var(--btn-ink);border-color:var(--btn)}
+.check{display:flex;align-items:center;gap:12px;min-height:52px;padding:0 14px;border-radius:12px;border:1.5px solid var(--line-strong);background:var(--surface);cursor:pointer;font-weight:600}
+.check input{width:24px;height:24px;min-height:0;accent-color:var(--btn)}
+.err{color:var(--warn);font-weight:600;font-size:15px;min-height:0}
+.fbline{display:grid;grid-template-columns:auto 1fr;gap:10px;padding:12px;border-radius:12px;font-size:15px}
+.fbline.good{background:var(--good-bg)}.fbline.warn{background:var(--warn-bg)}.fbline.info{background:var(--info-bg)}
+.fbline b{font-size:12px;letter-spacing:.07em;text-transform:uppercase;padding-top:2px}
+.fbline.good b{color:var(--good)}.fbline.warn b{color:var(--warn)}.fbline.info b{color:var(--info)}
+.desc{font-size:16px;line-height:1.5}
+textarea.mono{font:13px/1.4 ui-monospace,Menlo,Consolas,monospace}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--tabh) + env(safe-area-inset-bottom,0px) + 84px);z-index:60;background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:12px;font-weight:600;font-size:15px;max-width:calc(100% - 32px);opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.show{opacity:1}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+
+/* v2: veckans passlista */
+.dot.ring{background:transparent;border:2.5px solid var(--c)}
+.strip{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.dcell{display:flex;flex-direction:column;align-items:center;gap:3px;min-height:76px;padding:8px 2px 6px;border-radius:12px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-size:12px}
+.dcell b{font-family:var(--f-display);font-size:15px;text-transform:uppercase;letter-spacing:.03em;line-height:1}
+.dcell span{font-size:15px;font-weight:600;line-height:1}
+.dcell .dots{display:flex;flex-wrap:wrap;justify-content:center;gap:3px;min-height:12px}
+.dcell .dots .dot{width:9px;height:9px}
+.dcell.today{background:color-mix(in srgb,var(--yellow) 25%,var(--surface));border-color:var(--yellow);border-width:2px}
+.dcell.rest{background:transparent;border-style:dashed;color:var(--ink-2)}
+.dcell small{font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.srow{display:grid;grid-template-columns:58px minmax(0,1fr) auto;gap:12px;align-items:center;width:100%;text-align:left;min-height:68px;padding:10px 12px;border-radius:14px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.srow.skipped{opacity:.55;background:transparent;border-style:dashed}
+.srow.done{background:color-mix(in srgb,var(--good-bg) 60%,var(--surface))}
+.srow.opt{background:transparent;border-style:dashed}
+.dchip{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:46px;border-radius:10px;background:var(--surface-2);font-family:var(--f-display);font-weight:700;text-transform:uppercase;line-height:1.05;text-align:center;padding:4px}
+.dchip b{font-size:17px}.dchip span{font-size:13px;font-family:var(--f-body);font-weight:600;color:var(--ink-2)}
+.dchip.none{background:transparent;border:1.5px dashed var(--line-strong);color:var(--ink-2);font-family:var(--f-body);font-size:12px;font-weight:600;text-transform:none}
+.dchip.tod{background:var(--yellow);color:var(--yellow-ink)}.dchip.tod span{color:var(--yellow-ink)}
+.srow .t{font-weight:600;line-height:1.25}
+.srow .m{display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px;font-size:14px;color:var(--ink-2);margin-top:2px}
+.srow .st{font-size:13px;font-weight:700;text-align:right}
+.qrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+.qrow:first-child{border-top:0}
+.qrow b{display:block;font-weight:600}.qrow span{font-size:14px;color:var(--ink-2)}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.seg .chip{justify-content:center;border-radius:14px}
+.dgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.dgrid button{min-height:62px;border-radius:12px;border:1.5px solid var(--line-strong);background:var(--surface);font:600 13px var(--f-body);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;position:relative}
+.dgrid button b{font-family:var(--f-display);font-size:16px;text-transform:uppercase}
+.dgrid button[aria-pressed="true"]{background:var(--btn);color:var(--btn-ink);border-color:var(--btn)}
+.dgrid button.sug::after{content:"";position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:var(--yellow);border:1px solid var(--yellow-ink)}
+.subh{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);margin-top:4px}
+</style><style>
+:root{color-scheme:light}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+
+
+<div class="wrap" id="app">
+  <header class="hdr">
+    <div class="brand">Superklassikern 2027<small>Vasa · Vätter · Vansbro · Lidingö</small></div>
+    <button class="iconbtn" data-a="settings" aria-label="Inställningar">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
+    </button>
+  </header>
+  <main id="view"></main>
+</div>
+
+<div class="fabwrap" id="fabwrap"><button class="fab" data-a="log" data-plan="">
+  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Logga pass</button></div>
+
+<nav class="tabbar" aria-label="Huvudmeny"><div class="tabs">
+  <button class="tab" data-a="tab" data-v="home"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Översikt</button>
+  <button class="tab" data-a="tab" data-v="plan"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Plan</button>
+  <button class="tab" data-a="tab" data-v="log"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg>Logg</button>
+  <button class="tab" data-a="tab" data-v="coach"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1.1-4.3A8 8 0 1 1 21 12z"/></svg>Feedback</button>
+</div></nav>
+
+<div class="sheetroot" id="sheet" hidden><div class="backdrop" data-a="close"></div><div class="panel" id="panel" role="dialog" aria-modal="true" tabindex="-1"></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+'use strict';
+/* ================= hjälpfunktioner ================= */
+var DAY=864e5;
+var DOW=['mån','tis','ons','tors','fre','lör','sön'];
+var DOWL=['måndag','tisdag','onsdag','torsdag','fredag','lördag','söndag'];
+var MON=['jan','feb','mars','apr','maj','juni','juli','aug','sep','okt','nov','dec'];
+function pad(n){return String(n).padStart(2,'0');}
+function iso(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+function parse(s){var p=s.split('-').map(Number);return new Date(p[0],p[1]-1,p[2],12);}
+function addDays(d,n){var x=new Date(d.getTime());x.setDate(x.getDate()+n);x.setHours(12,0,0,0);return x;}
+function monday(d){var x=new Date(d.getTime());x.setHours(12,0,0,0);x.setDate(x.getDate()-((x.getDay()+6)%7));return x;}
+function diffDays(a,b){return Math.round((a.getTime()-b.getTime())/DAY);}
+function nowDate(){var n=new Date();n.setHours(12,0,0,0);return n;}
+function r5(x){return Math.max(5,Math.round(x/5)*5);}
+function lerp(a,b,t){return a+(b-a)*t;}
+function clamp(x,a,b){return Math.max(a,Math.min(b,x));}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function fmtMin(m){m=Math.round(m);var h=Math.floor(m/60),r=m%60;if(h===0)return r+' min';if(r===0)return h+' tim';return h+' tim '+r+' min';}
+function fmtH(m){return (Math.round(m/6)/10).toString().replace('.',',')+' tim';}
+function fmtDate(d){return DOW[(d.getDay()+6)%7]+' '+d.getDate()+' '+MON[d.getMonth()];}
+function fmtDateFull(d){return DOW[(d.getDay()+6)%7]+' '+d.getDate()+' '+MON[d.getMonth()]+' '+d.getFullYear();}
+function isoWeek(d){var t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));var dn=(t.getUTCDay()+6)%7;t.setUTCDate(t.getUTCDate()-dn+3);var fy=new Date(Date.UTC(t.getUTCFullYear(),0,4));return 1+Math.round(((t-fy)/DAY-3+((fy.getUTCDay()+6)%7))/7);}
+function rangeLabel(a){var b=addDays(a,6);return a.getMonth()===b.getMonth()?a.getDate()+'–'+b.getDate()+' '+MON[b.getMonth()]:a.getDate()+' '+MON[a.getMonth()]+'–'+b.getDate()+' '+MON[b.getMonth()];}
+function num(v){return parseFloat(String(v==null?'':v).replace(',','.').replace(/\s/g,''));}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+function fmtNum(x,dec){return (Math.round(x*Math.pow(10,dec))/Math.pow(10,dec)).toString().replace('.',',');}
+
+/* ================= grunddata ================= */
+var SP={
+  lop:{n:'Löpning',c:'var(--lop)'},cyk:{n:'Cykel',c:'var(--cyk)'},ski:{n:'Skidor/stak',c:'var(--ski)'},
+  sim:{n:'Simning',c:'var(--sim)'},str:{n:'Styrka',c:'var(--str)'},ann:{n:'Annat',c:'var(--vil)'}
+};
+var TY={dist:'Distans',int:'Intervall',str:'Styrka',vila:'Vila',lopp:'Lopp'};
+var RACES=[
+  {key:'vasa',name:'Vasaloppet',short:'Vasa',sport:'ski',km:90,goalMin:420,goalTxt:'under 7 tim',what:'90 km skidor'},
+  {key:'vatter',name:'Vätternrundan',short:'Vätter',sport:'cyk',km:315,goalMin:540,goalTxt:'under 9 tim',what:'315 km cykel'},
+  {key:'vansbro',name:'Vansbrosimningen',short:'Vansbro',sport:'sim',km:3,goalMin:65,goalTxt:'ca 1 tim 05 (sim + löp under 4 tim)',what:'3 km simning',tentative:true},
+  {key:'liding',name:'Lidingöloppet',short:'Lidingö',sport:'lop',km:30,goalMin:175,goalTxt:'ca 2 tim 55 (sim + löp under 4 tim)',what:'30 km löpning',tentative:true}
+];
+var RPE_TXT={1:'Mycket lätt',2:'Mycket lätt',3:'Lätt',4:'Behagligt',5:'Medel',6:'Rätt hårt',7:'Hårt',8:'Mycket hårt',9:'Nästan max',10:'Max'};
+var FEELS=[['pigg','Pigg'],['bra','Bra'],['seg','Seg'],['slut','Slut']];
+function inten(r){if(r<=3)return 'Mycket lätt';if(r<=4)return 'Lätt';if(r<=6)return 'Medel';if(r<=8)return 'Hård';return 'Maximal';}
+
+/* ================= lagring ================= */
+var KEY='superklassikern2027.v1',memStore=null,storageOk=true;
+function defaults(){return {v:2,started:iso(nowDate()),races:{vasa:'2027-03-07',vatter:'2027-06-18',vansbro:'2027-07-10',liding:'2027-09-25'},volMult:1,longMult:1,adjFrom:'',snow:false,bikeIndoor:true,assign:{},skip:{},swap:{},restDays:{},dismissed:{},logs:[],tab:'home'};}
+function readStore(){try{var r=localStorage.getItem(KEY);if(r)return JSON.parse(r);}catch(e){storageOk=false;}if(memStore){try{return JSON.parse(memStore);}catch(e2){}}return null;}
+function writeStore(){var j=JSON.stringify(S);memStore=j;try{localStorage.setItem(KEY,j);}catch(e){storageOk=false;}}
+function normalize(o){
+  var d=defaults(),x=Object.assign(d,o||{});
+  x.races=Object.assign(defaults().races,(o&&o.races)||{});
+  ['assign','skip','swap','restDays','dismissed'].forEach(function(k){if(!x[k]||typeof x[k]!=='object')x[k]={};});
+  if(!Array.isArray(x.logs))x.logs=[];
+  if((o&&o.v)!==2){x.logs.forEach(function(l){if(l.planDate)delete l.planDate;if(!l.planId)l.planId='';});delete x.overrides;x.v=2;}
+  return x;
+}
+var S=normalize(readStore());
+function save(){writeStore();}
+
+/* ================= planmotor ================= */
+function skiName(){return S.snow?'Skidor':'Stakmaskin';}
+function mk(sport,type,min,rpe,title,desc,extra){return Object.assign({sport:sport,type:type,min:min,rpe:rpe,title:title,desc:desc},extra||{});}
+function estKm(sport,min,type){var k=0;if(sport==='lop')k=min/(type==='int'?6.0:6.6);else if(sport==='cyk'&&!S.bikeIndoor)k=min*0.45;else if(sport==='ski'&&S.snow)k=min*0.17;if(!k)return '';k=sport==='cyk'?Math.round(k/5)*5:Math.round(k);return 'ca '+k+' km';}
+var REPLEN={lop:[3,4,5,6,8],cyk:[6,8,10,12,15],ski:[4,5,6,8,10]};
+function intDesc(sport,min,lvl){
+  var arr=REPLEN[sport],rep=arr[Math.min(arr.length-1,Math.floor(lvl*arr.length))];
+  var rec=sport==='cyk'?Math.max(3,Math.round(rep/3)):Math.max(2,Math.round(rep/2.5));
+  var warm=Math.max(10,Math.min(15,Math.round(min*0.25/5)*5)),cool=10,work=Math.max(rep,min-warm-cool);
+  var reps=Math.max(3,Math.floor((work+rec)/(rep+rec)));
+  if(sport==='ski'&&!S.snow)return warm+' min uppvärmning på stakmaskinen (lätt motstånd), '+reps+'×'+rep+' min hårt (RPE 7–8, damper ca 5–7) med '+rec+' min lugnt emellan, '+cool+' min nedvarvning. Tänk höga höfter, hela kroppen i draget och jämn takt.';
+  if(sport==='cyk'&&S.bikeIndoor)return 'Gymcykel eller spinning: '+warm+' min uppvärmning, '+reps+'×'+rep+' min hårt men jämnt (RPE 7–8) med '+rec+' min lugnt emellan, '+cool+' min nedvarvning. Ha fläkt och dryck nära.';
+  return warm+' min uppvärmning, '+reps+'×'+rep+' min i hård men kontrollerad fart (RPE 7–8) med '+rec+' min lugnt emellan, '+cool+' min nedvarvning.';
+}
+function longDesc(sport,min){
+  var km=estKm(sport,min,'dist');
+  if(sport==='lop')return 'Lugnt och jämnt, du ska kunna föra ett samtal. '+km+'. '+(min>=90?'Öva energi och vätska: ca 30–60 g kolhydrater per timme och drick regelbundet. Du fick kramp vid 18 km på Lidingö, så testa strategin nu och inte på tävlingsdagen. ':'')+'Ömmar benhinnorna: byt till cykel.';
+  if(sport==='cyk'&&S.bikeIndoor)return 'Gymcykel eller spinning, jämn distansfart (RPE 4–5). Ät och drick var 20:e minut (60–80 g kolhydrater i timmen). Orkar du inte hela passet inomhus: dela det i två pass samma dag (t.ex. 2×'+Math.round(min/10)*5+' min) och logga båda mot samma pass.';
+  if(sport==='cyk')return 'Jämn, lugn distansfart (RPE 4–5), '+km+'. Ät och drick var 20:e minut (60–80 g kolhydrater i timmen på långa pass). Åk helst i grupp eller på kuperad väg.';
+  if(sport==='ski'&&S.snow)return 'Teknik före fart. Klassisk stil i spår på snö. '+km+'. Öva din ät- och dryckesrutin som på Vasaloppet (energi var 30–40 min). Sikta på jämn fart hela passet.';
+  if(sport==='ski')return 'Stakmaskin i block, t.ex. 3×'+Math.max(15,Math.round(min/3/5)*5)+' min med 3–5 min paus (damper 3–5, RPE 4–5). Fokus på teknik och rytm, inte kraft. Så fort det finns snö byter du till spår, då kan långpasset bli mycket längre.';
+  return '';
+}
+function swimDesc(min,lvl,tech,open){
+  var total=Math.max(600,Math.round(min*34/50)*50),drill=tech?300:0,main=Math.max(200,total-300-drill);
+  var rep=lvl<0.34?100:(lvl<0.67?200:400);if(main<rep*2)rep=100;
+  var n=Math.max(2,Math.floor(main/rep)),rest=rep>=400?30:20;
+  return 'Ca '+total+' m. 200 m uppvärmning, '+(tech?'6×50 m drill (fingertoppsdrag, ensidig simning), ':'')+n+'×'+rep+' m crawl med '+rest+' s vila, 100 m nedsim. Fokus: långa tag, rotation från höften, andas var 3:e tag. Ta tid per 100 m och sikta på jämna varv.'+(open?' Simma gärna i öppet vatten och öva att sikta (titta framåt var 6–8:e tag).':'');
+}
+var STR_TXT={
+  bas:'Helkroppsstyrka, 3 varv: knäböj 10, raka marklyft 10, utfall 8/ben, rodd med gummiband 12, plankan 45 s, sidoplanka 30 s/sida. Avsluta med tåhävningar 2×15 (stärker vaden och skyddar benhinnorna).',
+  ski:'Överkropp och bål för stakning, 3 varv: stakning med gummiband eller kabel 15, hantelrodd 10, marklyft 8, benböj 10, plankan 60 s, rysk twist 20. Starka armar och bål sparar dig på sista milen.',
+  cyk:'Ben och bål, 3 varv: benböj 8–10, utfall 8/ben, step-ups 10/ben, höftlyft 12, plankan 60 s, sidoplanka 40 s. Håll vikterna måttliga och undvik träningsvärk före långpasset.',
+  lop:'Löparstyrka, 3 varv: enbensknäböj 8/ben, step-ups 10/ben, tåhävningar 15, hälgång 30 m, enbens höftlyft 10, plankan 60 s. Stärker vader och skenben.',
+  sim:'Axlar och bål, 3 varv: rodd med gummiband 12, axelrotation 15, plankan 60 s, sidoplanka 40 s, höftlyft 12.'
+};
+function strength(c,kind,range){
+  var min=c.L(range[0],range[1]);
+  var d=STR_TXT[kind]||STR_TXT.bas;
+  if(c.rest)d='Vilovecka, lätt version: 2 varv och ingen träningsvärk. '+d;
+  return mk('str','str',min,6,'Styrka',d);
+}
+function swim(c,range,tech,open){
+  var min=c.L(range[0],range[1]);
+  return mk('sim','dist',min,5,tech?'Crawlteknik':'Simuthållighet',swimDesc(min,c.lvl,tech,open));
+}
+function intv(c,sport,range,noKey){
+  var min=c.L(range[0],range[1]);
+  var nm=sport==='ski'?skiName()+' intervaller':(sport==='cyk'&&S.bikeIndoor?'Gymcykel intervaller':'Intervaller');
+  if(c.rest)return mk(sport,'dist',min,4,'Lugnt pass (vilovecka)','Vilovecka: kör passet lugnt och hoppa över de hårda intervallerna. '+(sport==='ski'&&!S.snow?'Stakmaskin i jämn, lugn takt.':estKm(sport,min,'dist')));
+  return mk(sport,'int',min,7,nm,intDesc(sport,min,c.lvl),noKey?{nokey:true}:{});
+}
+function longS(c,sport,range){
+  var min=c.LL(range[0],range[1]);
+  if(sport==='ski'&&!S.snow)min=Math.min(min,90);
+  var nm=sport==='ski'?skiName()+' långpass':(sport==='cyk'&&S.bikeIndoor?'Gymcykel långpass':'Långpass');
+  return mk(sport,'dist',min,5,nm,longDesc(sport,min),{long:true});
+}
+function easyS(c,sport,range,title,desc,opt,rpe){
+  var min=c.L(range[0],range[1]);
+  return mk(sport,'dist',min,rpe||3,title,desc,opt?{opt:true}:{});
+}
+function skiEasy(c,range){
+  var min=c.L(range[0],range[1]);
+  return mk('ski','dist',min,4,skiName()+' distans',S.snow?'Åk lugnt i spår, teknik före fart (RPE 4). Fokus på glid, balans och stavtag.':'Stakmaskin i lugn, jämn takt, gärna i block (t.ex. 3×15–20 min med 2 min paus), RPE 4. Fokus på teknik och rytm. Gör så mycket du hinner, det är din bästa skidträning innan snön kommer.');
+}
+function cykEasy(c,range,opt){
+  return easyS(c,'cyk',range,S.bikeIndoor?'Lätt gymcykel':'Lätt cykling','Lugn cykling som aktiv återhämtning och konditionsbas utan stötar mot benhinnorna.'+(opt?' Valfritt.':''),opt,3);
+}
+var TPL={
+  bas:function(c){return [
+    cykEasy(c,[45,45],true),
+    intv(c,'lop',[45,55]),
+    strength(c,'bas',[45,55]),
+    swim(c,[40,50],true),
+    c.rest?easyS(c,'ski',[30,40],skiName()+' lugnt','Lugnt pass, hoppa över de hårda intervallerna.',false,3):mk('ski','int',c.L(30,40),6,skiName()+' korta intervaller',intDesc('ski',c.L(30,40),c.lvl*0.5),{nokey:true}),
+    longS(c,'lop',[70,100]),
+    skiEasy(c,[45,75])];},
+  ski:function(c){return [
+    null,
+    intv(c,'ski',[55,75]),
+    strength(c,'ski',[50,50]),
+    swim(c,[40,50],c.lvl<0.5,false),
+    easyS(c,'lop',[40,40],'Lätt löpning','Valfritt: lugn löpning för att hålla igång löpformen.',true),
+    longS(c,'ski',[90,225]),
+    easyS(c,'lop',[40,60],'Lätt löpning','Lugn återhämtningslöpning. Ömmar benhinnorna: ersätt med cykel eller promenad.',false,3)];},
+  cyk:function(c){return [
+    null,
+    intv(c,'cyk',[60,80]),
+    strength(c,'cyk',[40,45]),
+    swim(c,[40,55],c.lvl<0.4,false),
+    easyS(c,'sim',[30,30],'Lätt simning','Valfritt: 30 min lugn crawl, fokus på teknik. Extra simpass hjälper när crawl är svagaste grenen.',true),
+    longS(c,'cyk',[120,330]),
+    (c.wi%2===0)?easyS(c,'lop',[40,60],'Lätt löpning','Lugn löpning som underhåll av löpformen.',false,3):cykEasy(c,[60,90],false)];},
+  sim:function(c){return [
+    null,
+    mk('sim','int',c.L(40,50),7,'Simintervaller',swimDesc(c.L(40,50),c.lvl,false,true)),
+    strength(c,'sim',[30,30]),
+    swim(c,[45,60],false,true),
+    cykEasy(c,[45,45],true),
+    mk('sim','dist',c.LL(50,70),5,'Långpass simning',swimDesc(c.LL(50,70),c.lvl,false,true),{long:true}),
+    cykEasy(c,[60,60],false)];},
+  lop:function(c){return [
+    null,
+    intv(c,'lop',[50,65]),
+    strength(c,'lop',[40,45]),
+    cykEasy(c,[60,75],false),
+    easyS(c,'sim',[30,30],'Lätt simning','Valfritt: 30 min lugn crawl.',true),
+    longS(c,'lop',[80,160]),
+    easyS(c,'lop',[40,55],'Lätt löpning','Lugn löpning. Ömmar benhinnorna: byt till cykel.',false,3)];}
+};
+function shortInt(sp,min){
+  if(sp==='sim')return 'Ca 1000 m: 200 m uppvärmning, 4×100 m i tävlingsfart (RPE 6–7) med 30 s vila, 200 m nedsim. Sluta innan det blir jobbigt.';
+  return '15 min uppvärmning, 4×3 min i tävlingsfart (RPE 6–7) med 3 min lugnt emellan, 10 min nedvarvning. Sluta innan det blir jobbigt, målet är att hålla farten.';
+}
+function taperWeek(w){
+  var r=w.race,sp=r.sport;
+  var primMin={ski:45,cyk:45,sim:35,lop:40}[sp],longMin={ski:75,cyk:90,sim:40,lop:50}[sp];
+  var sec=sp==='sim'?'cyk':'sim';
+  return [null,
+    mk(sp,'int',primMin,6,'Kort fartpass',shortInt(sp,primMin)),
+    mk('str','str',30,4,'Lätt styrka','Lätt underhåll, 2 varv av dina vanliga övningar. Inga tunga vikter och ingen träningsvärk.'),
+    mk(sec,'dist',30,3,sec==='sim'?'Lätt simning':'Lätt cykling','Lugn rörelse för att hålla igång kroppen.'),
+    null,
+    mk(sp,'dist',longMin,4,'Sista längre passet','Lugnt och avslappnat. '+estKm(sp,longMin,'dist')+' Du ska bli sugen på lopp, inte trött.'),
+    null];
+}
+function raceDesc(r){
+  var d={
+    vasa:'Starta lugnt. Varje minut du sparar de första 30 km tjänar du på sista milen. Ät och drick var 30–45 min och ta energi vid kontrollerna. Mål: under 7 tim (snitt 12,9 km/h).',
+    vatter:'Åk i grupp och spara krafter i klungan. Ät 60 g kolhydrater i timmen och drick regelbundet. Mål: under 9 tim, vilket är ett snitt på ca 35 km/h inklusive stopp. Starttid varierar mellan fredag och lördag, så logga på den dag du kör.',
+    vansbro:'3 km i älven. Simma jämnt, sikta ofta och spara krafter, eftersom löpningen på Lidingö kommer senare. Mål: ca 1 tim 05.',
+    liding:'Starta lugnt och ta vätska vid varje station och energi efter ca 10 km. Förra gången kom kramp efter 18 km, så ät och drick i tid. Mål: ca 2 tim 55.'
+  };
+  return d[r.key];
+}
+function raceWeek(w){
+  var r=w.race,sp=r.sport,rd=(parse(S.races[r.key]).getDay()+6)%7,arr=[null,null,null,null,null,null,null];
+  if(rd>=3)arr[1]=mk(sp,'int',sp==='sim'?30:40,6,'Aktivering','Kort pass för att väcka kroppen: lugnt, 3×3 min i tävlingsfart och lugnt igen.');
+  if(rd>=5)arr[3]=mk(sp,'dist',30,4,'Öppnare','30 min lugnt med 4×1 min raska steg eller tramp. Du ska känna dig pigg och otålig.');
+  arr[rd]=mk(sp,'lopp',r.goalMin,8,r.name,raceDesc(r),{race:r.key});
+  return arr;
+}
+function recoveryWeek(){
+  return [null,
+    mk('sim','dist',30,3,'Lätt simning','Återhämtning: 30 min lugn simning, ingen tidtagning.'),
+    null,
+    mk('cyk','dist',40,3,'Lätt cykling','Lugn rörelse som hjälper musklerna att repa sig.'),
+    null,
+    mk('lop','dist',30,3,'Lätt jogg eller promenad','Valfritt: 30 min lugnt. Känns det tungt, ta en promenad.',{opt:true}),
+    null];
+}
+var FOCUS_TITLE={bas:'Bas och teknik',ski:'Skidspecifikt',cyk:'Cykelspecifikt',sim:'Simfokus',lop:'Löpspecifikt'};
+var FOCUS_TIP={
+  bas:'Bygg rutinen: lugna pass ska kännas lätta. Stakmaskin och skidteknik är det som sparar mest tid, så de får flera pass varje vecka. Simningen väntar tills efter Vasaloppet.',
+  ski:'Så mycket skidtid som möjligt. Teknik före fart, och öva ät- och dryckesrutinen på långpassen.',
+  cyk:'Bygg uthållighet på cykeln. Veckans långpass är viktigast, så öva ät- och dryckesrutinen där.',
+  sim:'Simma jämnt och sikta. Öppet vatten om möjligt.',
+  lop:'Långpasset bygger mot 30 km. Ömmar benhinnorna: byt ett löppass mot cykel och öka max 10 % i veckan.'
+};
+function weekTip(w){
+  if(w.phase==='race')return 'Tävlingsvecka: håll rutinerna, sov gott och ät kolhydrater de sista dagarna. Inga nya saker, ingen ny utrustning.';
+  if(w.phase==='taper')return 'Nedtrappning: volymen sänks men farten hålls. Du ska känna dig otålig, och det är rätt.';
+  if(w.phase==='recovery')return 'Återhämtning efter loppet: lätta pass eller vila. Kroppen bygger upp sig nu.';
+  if(w.rest)return 'Vilovecka: lägre volym så att kroppen hinner ta upp träningen. Hoppa inte över den, den ger nästa block.';
+  return FOCUS_TIP[w.focus]||'';
+}
+function weekLabel(w){
+  if(w.phase==='race')return 'Tävlingsvecka · '+w.race.short;
+  if(w.phase==='taper')return 'Nedtrappning · '+w.race.short;
+  if(w.phase==='recovery')return 'Återhämtning';
+  if(w.rest)return 'Vilovecka';
+  return FOCUS_TITLE[w.focus];
+}
+function genWeek(w,vol,lm){
+  if(w.phase==='race')return raceWeek(w);
+  if(w.phase==='taper')return taperWeek(w);
+  if(w.phase==='recovery')return recoveryWeek();
+  var c={lvl:w.lvl,mult:w.rest?0.65:1,rest:w.rest,wi:w.i};
+  c.L=function(a,b){return r5(lerp(a,b,c.lvl)*c.mult*vol);};
+  c.LL=function(a,b){return r5(lerp(a,b,c.lvl)*c.mult*vol*lm);};
+  return TPL[w.focus](c);
+}
+function buildPlan(){
+  var start=monday(parse(S.started));
+  var races=RACES.map(function(r){var d=parse(S.races[r.key]);return Object.assign({},r,{date:d,wk:monday(d)});}).sort(function(a,b){return a.date-b.date;});
+  var last=races[races.length-1].wk,nW=Math.max(1,Math.round(diffDays(last,start)/7)+1);
+  var weeks=[],i;
+  for(i=0;i<nW;i++)weeks.push({i:i,start:addDays(start,7*i),phase:null,race:null,focus:null,rest:false,lvl:0});
+  function idxOf(d){return Math.round(diffDays(d,start)/7);}
+  races.forEach(function(r){var k=idxOf(r.wk);if(k>=0&&k<nW){weeks[k].phase='race';weeks[k].race=r;}});
+  races.forEach(function(r){var k=idxOf(r.wk);
+    if(k-1>=0&&k-1<nW&&!weeks[k-1].phase){weeks[k-1].phase='taper';weeks[k-1].race=r;}
+    if(k+1>=0&&k+1<nW&&!weeks[k+1].phase){weeks[k+1].phase='recovery';}
+  });
+  weeks.forEach(function(w){
+    if(w.phase)return;
+    var nr=races.find(function(r){return r.wk.getTime()>w.start.getTime();})||races[races.length-1];
+    w.nextRace=nr;
+    var toTaper=idxOf(nr.wk)-1-w.i;
+    if(toTaper>12){w.phase='bas';w.focus='bas';}else{w.phase='build';w.focus=nr.sport;}
+  });
+  var gi=0;
+  while(gi<nW){
+    var w0=weeks[gi];
+    if(w0.phase!=='bas'&&w0.phase!=='build'){gi++;continue;}
+    var gj=gi;while(gj+1<nW&&weeks[gj+1].phase===w0.phase&&weeks[gj+1].focus===w0.focus)gj++;
+    var n=gj-gi+1;
+    for(var k=gi;k<=gj;k++)weeks[k].lvl=n===1?0.5:(k-gi)/(n-1);
+    gi=gj+1;
+  }
+  var cnt=0;
+  weeks.forEach(function(w,k){
+    if(w.phase!=='bas'&&w.phase!=='build'){cnt=0;return;}
+    cnt++;
+    if(cnt===4){var nx=weeks[k+1];if(nx&&nx.phase==='taper'){cnt=0;return;}w.rest=true;cnt=0;}
+  });
+  var byId={},plannedTotal=0,vasaWk=monday(parse(S.races.vasa));
+  var adjW=(S.volMult!==1||S.longMult!==1)&&S.adjFrom?monday(parse(S.adjFrom)):null;
+  weeks.forEach(function(w){
+    var useAdj=adjW&&w.start.getTime()>=adjW.getTime();
+    var arr=useAdj?genWeek(w,S.volMult,S.longMult):genWeek(w,1,1);
+    var wiso=iso(w.start);
+    w.sessions=[];w.plannedMin=0;w.bySport={};
+    for(var d=0;d<7;d++){
+      var s0=arr[d];if(!s0)continue;
+      if(s0.sport==='sim'&&w.start.getTime()<=vasaWk.getTime())continue;
+      var id=wiso+':'+d,s=s0,swapped=false;
+      if(S.swap[id]&&s.sport==='lop'&&s.type!=='lopp'){s=Object.assign({},s,{sport:S.swap[id],type:'dist',rpe:Math.min(s.rpe,4),title:'Cykel istället för löpning',desc:'Ersätter löppasset för att skona benhinnorna. Cykla lugnt och jämnt.',long:false,nokey:true});swapped=true;}
+      var key=!!(s.long||s.type==='lopp'||(s.type==='int'&&!s.nokey));
+      var skipped=!!S.skip[id],date='';
+      if(s.type==='lopp')date=S.races[s.race];
+      else if(S.assign[id]){var di=diffDays(parse(S.assign[id]),w.start);if(di>=0&&di<7)date=S.assign[id];}
+      var ses={id:id,w:w.i,s:s,orig:s0,sug:d,key:key,skipped:skipped,swapped:swapped,date:date};
+      w.sessions.push(ses);byId[id]=ses;
+      if(!s.opt&&!skipped){w.plannedMin+=s.min;w.bySport[s.sport]=(w.bySport[s.sport]||0)+s.min;}
+    }
+    plannedTotal+=w.plannedMin;
+    w.label=weekLabel(w);w.tip=weekTip(w);
+  });
+  return {start:start,weeks:weeks,byId:byId,races:races,total:plannedTotal};
+}
+var PLAN=null,A=null,T=iso(nowDate()),TD=nowDate();
+function weekIdx(isoDate){var i=Math.floor(diffDays(parse(isoDate),PLAN.start)/7);return (i>=0&&i<PLAN.weeks.length)?i:-1;}
+function sessionsOn(date){var wi=weekIdx(date);if(wi<0)return [];return PLAN.weeks[wi].sessions.filter(function(x){return x.date===date&&!x.skipped;});}
+function sortSes(a,b){
+  function rank(x){return x.skipped?4:(x.s.opt?3:(x.key?0:1));}
+  return rank(a)-rank(b)||a.sug-b.sug;
+}
+
+/* ================= analys ================= */
+function analyze(){
+  var logs=S.logs.slice().sort(function(a,b){return a.date<b.date?-1:(a.date>b.date?1:(a.created||0)-(b.created||0));});
+  var sm={},sessOf={};
+  function add(l,ses){var e=sm[ses.id]=sm[ses.id]||{logs:[],done:0};e.logs.push(l);e.done+=l.min;sessOf[l.id]=ses;}
+  logs.forEach(function(l){if(l.planId&&PLAN.byId[l.planId]&&!PLAN.byId[l.planId].skipped)add(l,PLAN.byId[l.planId]);});
+  logs.forEach(function(l){
+    if(sessOf[l.id])return;
+    var wi=weekIdx(l.date);if(wi<0)return;var best=null;
+    PLAN.weeks[wi].sessions.forEach(function(ses){
+      if(ses.skipped||ses.s.sport!==l.sport)return;
+      var done=sm[ses.id]?sm[ses.id].done:0;if(done>=0.8*ses.s.min)return;
+      var score=(ses.date===l.date?0:1000)+Math.abs((ses.s.min-done)-l.min)+(ses.key?-5:0);
+      if(!best||score<best.score)best={ses:ses,score:score};
+    });
+    if(best)add(l,best.ses);
+  });
+  var actual={};
+  logs.forEach(function(l){var wi=weekIdx(l.date);if(wi>=0)actual[wi]=(actual[wi]||0)+l.min;});
+  return {logs:logs,sm:sm,sessOf:sessOf,actual:actual};
+}
+function statOf(ses){var e=A.sm[ses.id],done=e?e.done:0;return {done:done,k:done>=0.8*ses.s.min?'done':(done>0?'part':'none')};}
+function weekStats(wi){
+  var w=PLAN.weeks[wi],total=0,done=0,kt=0,kd=0,rp=[];
+  w.sessions.forEach(function(ses){
+    if(ses.s.opt||ses.skipped)return;
+    var st=statOf(ses);total++;if(st.k==='done')done++;
+    if(ses.key){kt++;if(st.k==='done')kd++;}
+  });
+  A.logs.forEach(function(l){if(weekIdx(l.date)===wi&&l.rpe)rp.push(l.rpe);});
+  return {total:total,done:done,keyTotal:kt,keyDone:kd,actual:A.actual[wi]||0,planned:w.plannedMin,rpe:rp.length?rp.reduce(function(a,b){return a+b;},0)/rp.length:0};
+}
+function curIdx(){var i=Math.floor(diffDays(TD,PLAN.start)/7);return clamp(i,0,PLAN.weeks.length-1);}
+function nextRace(){return PLAN.races.find(function(r){return r.date.getTime()>=TD.getTime();})||null;}
+function goalPace(r){
+  if(r.sport==='ski'||r.sport==='cyk')return fmtNum(r.km*60/r.goalMin,1)+' km/h';
+  if(r.sport==='lop'){var p=r.goalMin/r.km,m=Math.floor(p),s=Math.round((p-m)*60);return m+':'+pad(s)+' min/km';}
+  var q=r.goalMin/(r.km*10),m2=Math.floor(q),s2=Math.round((q-m2)*60);return m2+':'+pad(s2)+' min/100 m';
+}
+
+/* ================= feedback ================= */
+function computeFeedback(){
+  var out=[],ci=curIdx(),w=PLAN.weeks[ci];
+  function add(o){var until=S.dismissed[o.id];if(until&&until>T)return;out.push(o);}
+  function ago(l){return diffDays(TD,parse(l.date));}
+  var last7=A.logs.filter(function(l){return ago(l)<=6&&ago(l)>=0;});
+  var r7=last7.filter(function(l){return l.rpe;});
+  var avg7=r7.length?r7.reduce(function(a,l){return a+l.rpe;},0)/r7.length:0;
+  var hi=r7.filter(function(l){return l.rpe>=9;}).length;
+  var l14=A.logs.filter(function(l){return ago(l)<=13&&ago(l)>=0;});
+  if(r7.length>=2&&(avg7>=7.5||hi>=2)){
+    add({id:'high',lvl:'warn',title:'Din ansträngning är hög, ta en extra vilodag',text:'Snittet är '+fmtNum(avg7,1)+' av 10 de senaste 7 dagarna'+(hi?' och du har haft '+hi+' pass på 9–10':'')+'. De flesta pass ska ligga på 3–6. Lägg in en vilodag nu så orkar du nyckelpassen.',actions:[{l:'Lägg in en vilodag',a:'restNext'},{l:'Dölj i 7 dagar',a:'dismiss',v:'high'}]});
+  } else {
+    var diffs=[];l14.forEach(function(l){var ses=A.sessOf[l.id];if(ses&&l.rpe&&ses.s.rpe&&ses.s.type!=='lopp')diffs.push(l.rpe-ses.s.rpe);});
+    if(diffs.length>=3){var ad=diffs.reduce(function(a,b){return a+b;},0)/diffs.length;
+      if(ad>=1.5)add({id:'above',lvl:'warn',title:'Du tar i mer än planen säger',text:'Dina pass känns i snitt '+fmtNum(ad,1)+' steg tyngre än planerat. Håll lugna pass lugna, annars saknas kraft till intervallerna.',actions:[{l:'Sänk volymen 10 %',a:'volDown'},{l:'Dölj i 7 dagar',a:'dismiss',v:'above'}]});}
+  }
+  var cnt=0,lag=0,latestLag=false,first=true;
+  for(var k=ci-1;k>=0&&cnt<3;k--){
+    var ls=PLAN.weeks[k].sessions.filter(function(x){return x.s.long&&!x.skipped;})[0];
+    if(!ls)continue;
+    cnt++;
+    var bad=statOf(ls).done<0.75*ls.s.min;
+    if(bad)lag++;
+    if(first){latestLag=bad;first=false;}
+  }
+  if(cnt>=2&&lag>=2)add({id:'long',lvl:'warn',title:'Du ligger efter på långpassen, vill du justera planen?',text:'Du har missat eller kortat '+lag+' av de senaste '+cnt+' långpassen. Långpassen bygger uthålligheten för alla fyra loppen. Sänk dem lite så att du kan ta dig ikapp utan att köra slut dig.',actions:[{l:'Sänk långpassen 15 %',a:'longDown'},{l:'Behåll planen',a:'dismiss',v:'long'}]});
+  else if(cnt>=1&&latestLag)add({id:'long1',lvl:'info',title:'Förra långpasset blev kortare än planerat',text:'Försök få in nästa långpass fullt ut. Det är veckans viktigaste pass.',actions:[{l:'Dölj i 7 dagar',a:'dismiss',v:'long1'}]});
+  // veckans nyckelpass
+  var wEnd=addDays(w.start,6),daysLeft=diffDays(wEnd,TD)+1;
+  var remKey=w.sessions.filter(function(x){return x.key&&!x.skipped&&statOf(x).k!=='done';}).length;
+  var missedKey=w.sessions.filter(function(x){return x.key&&!x.skipped&&x.date&&x.date<T&&statOf(x).k!=='done';}).length;
+  var dueKey=w.sessions.filter(function(x){return x.key&&!x.skipped&&x.date&&x.date<T;}).length;
+  if(dueKey>=2&&missedKey/dueKey>=0.5)add({id:'missed',lvl:'warn',title:'Du har missat '+missedKey+' av '+dueKey+' planerade nyckelpass',text:'Det händer. Lägg inte på extra för att ta igen, hellre lätta på veckan och ta nästa pass som det kommer.',actions:[{l:'Sänk volymen 10 %',a:'volDown'},{l:'Dölj i 7 dagar',a:'dismiss',v:'missed'}]});
+  else if(remKey>daysLeft)add({id:'booked',lvl:'info',title:'Fler nyckelpass än dagar kvar',text:'Du har '+remKey+' nyckelpass kvar men bara '+daysLeft+(daysLeft===1?' dag':' dagar')+'. Hoppa över det som är minst viktigt, eller lägg två pass på samma dag (det hårdaste först, det andra lugnt).',actions:[{l:'Dölj i 7 dagar',a:'dismiss',v:'booked'}]});
+  var shins=l14.filter(function(l){return l.shin;}).length;
+  if(shins>=2)add({id:'shin',lvl:'warn',title:'Benhinnorna ömmar, minska löpningen',text:'Du har noterat ömhet vid '+shins+' pass de senaste två veckorna. Byt veckans löppass mot cykel eller simning, och öka löpningen försiktigt (max 10 % per vecka). Fortsätter det, kontakta fysioterapeut.',actions:[{l:'Byt veckans löppass mot cykel',a:'swapRun'},{l:'Dölj i 7 dagar',a:'dismiss',v:'shin'}]});
+  else if(shins===1)add({id:'shin1',lvl:'info',title:'Du noterade ömma benhinnor',text:'Håll koll. Kommer det igen: byt ett löppass mot cykel och gör tåhävningar efter passen.',actions:[{l:'Dölj i 7 dagar',a:'dismiss',v:'shin1'}]});
+  var lastFive=A.logs.slice(-5).filter(function(l){return l.feel;});
+  var tired=lastFive.filter(function(l){return l.feel==='seg'||l.feel==='slut';}).length;
+  if(lastFive.length>=3&&tired>=3&&!out.some(function(o){return o.id==='high';}))add({id:'tired',lvl:'warn',title:'Du känner dig sliten',text:tired+' av dina senaste '+lastFive.length+' pass kändes sega eller slut. Sov mer, ät ordentligt och lägg in en vilodag.',actions:[{l:'Lägg in en vilodag',a:'restNext'},{l:'Dölj i 7 dagar',a:'dismiss',v:'tired'}]});
+  if(ci>=2){var o2=0;[ci-1,ci-2].forEach(function(k2){var st=weekStats(k2);if(st.planned>0&&st.actual>1.25*st.planned)o2++;});
+    if(o2===2)add({id:'over',lvl:'warn',title:'Du tränar mer än planen',text:'Två veckor i rad över 125 % av planerad tid. Bra driv, men risken för överbelastning (särskilt benhinnorna) ökar. Håll lätta pass lätta.',actions:[{l:'Dölj i 7 dagar',a:'dismiss',v:'over'}]});}
+  var swimPlanned=[ci,ci-1].some(function(k3){return k3>=0&&PLAN.weeks[k3].sessions.some(function(x){return x.s.sport==='sim'&&!x.s.opt&&!x.skipped;});});
+  var swimLogged=A.logs.some(function(l){return l.sport==='sim'&&ago(l)<=14&&ago(l)>=0;});
+  if(swimPlanned&&!swimLogged&&diffDays(TD,PLAN.start)>=10)add({id:'swim',lvl:'info',title:'Simningen halkar efter',text:'Crawl är din svagaste gren och behöver regelbundna pass. Ta ett kort teknikpass på 30 min, hellre ofta än långt.',actions:[{l:'Logga ett simpass',a:'logSim'},{l:'Dölj i 7 dagar',a:'dismiss',v:'swim'}]});
+  if(ci>=1){var pst=weekStats(ci-1);
+    if(pst.keyTotal>=2&&pst.keyDone===pst.keyTotal&&(!pst.rpe||pst.rpe<=7))add({id:'good'+(ci-1),lvl:'good',title:'Bra vecka, alla nyckelpass klara',text:'Du tog '+pst.done+' av '+pst.total+' pass och höll ansträngningen i schack. Fortsätt så.',actions:[]});}
+  if(A.logs.length===0)add({id:'first',lvl:'info',title:'Logga ditt första pass',text:'Välj först vilka pass du kör vilken dag, och tryck sedan på den gula knappen efter passet. Det tar under en minut.',actions:[]});
+  out.push({id:'focus',lvl:'info',title:'Veckans fokus: '+w.label,text:w.tip,actions:[],fixed:true});
+  var order={warn:0,good:1,info:2};
+  out.sort(function(a,b){return order[a.lvl]-order[b.lvl];});
+  return out;
+}
+function logFeedback(l){
+  var out=[],ses=A.sessOf[l.id],s=ses&&ses.s;
+  if(s){
+    var done=A.sm[ses.id].done,ratio=done/s.min;
+    if(s.type==='lopp')out.push({lvl:'good',t:'Lopp avklarat! '+fmtMin(l.min)+' mot målet '+fmtMin(s.min)+'. Ta det lugnt de närmaste dagarna.'});
+    else if(ratio>=0.8&&ratio<=1.15)out.push({lvl:'good',t:'Passet är avklarat ('+done+' av '+s.min+' min).'});
+    else if(ratio<0.8&&A.sm[ses.id].logs.length>1)out.push({lvl:'info',t:'Delpass: '+done+' av '+s.min+' min är gjort. Logga resten mot samma pass senare.'});
+    else if(ratio<0.8)out.push({lvl:ratio<0.5?'warn':'info',t:'Kortare än planerat: '+l.min+' av '+s.min+' min ('+Math.round(ratio*100)+' %). Är resten tänkt senare kan du logga den mot samma pass.'+(s.long&&ratio<0.5?' Långpassen är viktigast, så försök få in dem fullt ut.':'')});
+    else out.push({lvl:'info',t:'Längre än planerat: '+done+' mot '+s.min+' min. Håll lugna pass lugna så du orkar nästa nyckelpass.'});
+    if(l.rpe&&s.rpe&&s.type!=='lopp'){var dr=l.rpe-s.rpe;
+      if(dr>=2)out.push({lvl:'warn',t:'Ansträngningen blev '+l.rpe+'/10 mot planerade '+s.rpe+'. Du tog i mer än meningen, så ta det lugnare på nästa lätta pass.'});
+      else if(dr<=-2)out.push({lvl:'info',t:'Det kändes lättare än planerat ('+l.rpe+' mot '+s.rpe+'). Bra form, men håll dig till planen.'});
+      else out.push({lvl:'good',t:'Ansträngningen '+l.rpe+'/10 ligger nära planen.'});}
+  } else out.push({lvl:'info',t:'Passet ligger utanför planen och räknas in i veckans volym.'});
+  if(l.km>0&&l.min>0){
+    if(l.sport==='lop'){var pc=l.min/l.km,pm=Math.floor(pc);out.push({lvl:'info',t:'Snittfart '+pm+':'+pad(Math.round((pc-pm)*60))+' min/km.'});}
+    else if(l.sport==='cyk'||l.sport==='ski')out.push({lvl:'info',t:'Snittfart '+fmtNum(l.km*60/l.min,1)+' km/h.'});
+    else if(l.sport==='sim'){var q=l.min/(l.km*10),qm=Math.floor(q);out.push({lvl:'info',t:'Snitt '+qm+':'+pad(Math.round((q-qm)*60))+' min per 100 m (inkl. vila).'});}
+  }
+  if(l.rpe>=9)out.push({lvl:'warn',t:'RPE '+l.rpe+' är nära max. Ta det lugnt dagen efter.'});
+  if(l.feel==='slut')out.push({lvl:'warn',t:'Du kände dig slut. Sov och ät ordentligt och överväg en extra vilodag.'});
+  if(l.shin)out.push({lvl:'warn',t:'Ömma benhinnor: byt nästa löppass mot cykel eller simning om det sitter i.'});
+  return out;
+}
+
+/* ================= UI-state ================= */
+var ui={tab:S.tab||'home',sheet:null,chartFrom:null,sel:null,open:{},confirmDel:false,confirmClear:false,dayDate:null};
+var form=null;
+function $(s){return document.querySelector(s);}
+function toast(t){var e=$('#toast');e.textContent=t;e.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(function(){e.classList.remove('show');},3200);}
+function spDot(sp,ring){return '<i class="dot'+(ring?' ring':'')+'" style="--c:'+SP[sp].c+'"></i>';}
+function dayName(date){var d=parse(date);return DOW[(d.getDay()+6)%7]+' '+d.getDate();}
+
+function sesRow(ses){
+  var s=ses.s,st=statOf(ses),isT=ses.date===T;
+  var chip=ses.date?'<div class="dchip'+(isT?' tod':'')+'"><b>'+DOW[(parse(ses.date).getDay()+6)%7]+'</b><span>'+parse(ses.date).getDate()+'</span></div>':'<div class="dchip none">Välj dag</div>';
+  var status='';
+  if(ses.skipped)status='<span class="st opt">Hoppad</span>';
+  else if(st.k==='done')status='<span class="st ok">Klar</span>';
+  else if(st.k==='part')status='<span class="st miss">Delvis<br>'+st.done+'/'+s.min+'</span>';
+  else if(ses.date&&ses.date<T)status='<span class="st miss">Ej gjort</span>';
+  var tier=ses.key?'<span class="pill now">Nyckel</span>':(s.opt?'<span class="pill">Valfritt</span>':'');
+  var meta=spDot(s.sport)+'<span>'+SP[s.sport].n+(s.type==='int'?' · intervall':'')+' · '+fmtMin(s.min)+(s.type==='lopp'?'':' · RPE '+s.rpe)+'</span>';
+  return '<button class="srow'+(ses.skipped?' skipped':'')+(st.k==='done'?' done':'')+(s.opt&&!ses.skipped&&st.k!=='done'?' opt':'')+'" data-a="session" data-id="'+ses.id+'">'+chip+'<div><div class="t">'+esc(s.title)+' '+tier+'</div><div class="m">'+meta+'</div></div><div>'+status+'</div></button>';
+}
+function stripHTML(w){
+  var h='<div class="strip">';
+  for(var d=0;d<7;d++){
+    var date=iso(addDays(w.start,d)),ss=w.sessions.filter(function(x){return x.date===date&&!x.skipped;});
+    var rest=S.restDays[date];
+    h+='<button class="dcell'+(date===T?' today':'')+(rest?' rest':'')+'" data-a="day" data-date="'+date+'" aria-label="'+DOWL[d]+' '+parse(date).getDate()+'"><b>'+DOW[d]+'</b><span>'+parse(date).getDate()+'</span><div class="dots">'+ss.map(function(x){return spDot(x.s.sport,statOf(x).k!=='done');}).join('')+'</div>'+(rest?'<small>vila</small>':'')+'</button>';
+  }
+  return h+'</div>';
+}
+function fbCard(f){
+  var tag={warn:'Obs',good:'Bra',info:'Tips'}[f.lvl];
+  var acts=(f.actions||[]).map(function(a,i){return '<button class="btn sm '+(i===0&&a.a!=='dismiss'?'primary':'')+'" data-a="fb" data-fa="'+a.a+'" data-v="'+(a.v||'')+'">'+esc(a.l)+'</button>';}).join('');
+  return '<article class="fb '+f.lvl+'"><span class="tag">'+tag+'</span><h3>'+esc(f.title)+'</h3><p>'+esc(f.text)+'</p>'+(acts?'<div class="btnrow">'+acts+'</div>':'')+'</article>';
+}
+
+/* ---------- Översikt ---------- */
+function todayCard(){
+  var ci=curIdx(),w=PLAN.weeks[ci],ss=sessionsOn(T).sort(sortSes),rest=S.restDays[T];
+  var h='<section class="card"><div class="sec-h"><h2 class="h2">Idag</h2><span class="sub">'+DOWL[(TD.getDay()+6)%7]+' '+TD.getDate()+' '+MON[TD.getMonth()]+'</span></div>';
+  if(ss.length){
+    h+='<div class="stack" style="gap:10px">';
+    ss.forEach(function(x){
+      h+=sesRow(x);
+      if(statOf(x).k!=='done')h+='<div class="btnrow"><button class="btn yellow big" data-a="quick" data-id="'+x.id+'">Klart som planerat</button><button class="btn" data-a="log" data-plan="'+x.id+'">Logga med detaljer</button></div>';
+    });
+    h+='</div><div class="btnrow" style="margin-top:10px"><button class="btn sm" data-a="day" data-date="'+T+'">Ändra dagens pass</button></div>';
+  } else if(rest){
+    h+='<p class="sub">Du har markerat idag som vilodag. Det är under vilan du blir starkare.</p><div class="btnrow" style="margin-top:10px"><button class="btn sm" data-a="restday" data-date="'+T+'">Ångra vilodag</button></div>';
+  } else {
+    var free=w.sessions.filter(function(x){return !x.date&&!x.skipped&&statOf(x).k!=='done';}).sort(sortSes);
+    if(free.length){
+      h+='<p class="sub" style="margin-bottom:6px">Inget pass är valt för idag. Vad passar dagen?</p>';
+      free.slice(0,5).forEach(function(x){
+        h+='<div class="qrow"><div><b>'+esc(x.s.title)+(x.key?' <span class="pill now">Nyckel</span>':'')+'</b><span>'+SP[x.s.sport].n+' · '+fmtMin(x.s.min)+'</span></div><button class="btn sm primary" data-a="assign" data-id="'+x.id+'" data-date="'+T+'">Kör idag</button></div>';
+      });
+      h+='<div class="btnrow" style="margin-top:10px"><button class="btn sm" data-a="restday" data-date="'+T+'">Vilodag idag</button></div>';
+    } else h+='<p class="sub">Inga pass kvar att välja i veckan. Vila eller lägg till ett extrapass genom att logga det.</p>';
+  }
+  return h+'</section>';
+}
+function renderHome(){
+  var nr=nextRace(),ci=curIdx(),w=PLAN.weeks[ci],h='';
+  if(nr){
+    var days=diffDays(nr.date,TD),total=Math.max(1,diffDays(nr.date,PLAN.start)),pr=clamp((total-days)/total*100,0,100);
+    h+='<section class="bib"><div class="eyebrow">Nästa lopp</div><div class="rname">'+nr.name+'</div>'+
+      '<div class="count"><span class="num">'+days+'</span><span class="unit">'+(days===1?'dag':'dagar')+'</span></div>'+
+      '<div class="facts"><span>'+fmtDateFull(nr.date)+'</span><span>'+nr.what+'</span><span>Mål: '+nr.goalTxt+'</span></div>'+
+      '<div class="prog" role="img" aria-label="'+Math.round(pr)+' procent av förberedelsetiden avklarad"><i style="width:'+pr+'%"></i></div>'+
+      '<div class="note">'+Math.ceil(days/7)+' veckor kvar · måltempo '+goalPace(nr)+'</div></section>';
+  } else h+='<section class="bib"><div class="eyebrow">Säsongen</div><div class="rname">Alla lopp avklarade</div><div class="note">Grattis, du är en superklassiker!</div></section>';
+  h+=todayCard();
+  var fbs=computeFeedback().filter(function(f){return !f.fixed;}).slice(0,2);
+  if(fbs.length)h+='<section class="stack">'+fbs.map(fbCard).join('')+'</section>';
+  var st=weekStats(ci),ses=w.sessions.slice().sort(sortSes),unas=w.sessions.filter(function(x){return !x.date&&!x.skipped&&!x.s.opt&&statOf(x).k!=='done';}).length;
+  h+='<section class="card"><div class="sec-h"><div><div class="eyebrow">Vecka '+isoWeek(w.start)+' · '+rangeLabel(w.start)+'</div><h2 class="h2">'+esc(w.label)+'</h2></div><div class="sub" style="text-align:right">'+st.done+' av '+st.total+' pass<br>klara</div></div>'+
+    '<p class="sub" style="margin-bottom:10px">Gör så många pass du hinner, nyckelpassen först. Välj dag för varje pass i takt med att veckan ser ut. Två pass på samma dag går bra.</p>'+
+    stripHTML(w)+'<div class="days" style="margin-top:12px">'+ses.map(sesRow).join('')+'</div>'+
+    '<p class="sub" style="margin-top:10px">'+esc(w.tip)+'</p></section>';
+  h+='<section class="card"><div class="sec-h"><h2 class="h2">Just nu</h2></div><div class="stack" style="gap:12px">'+
+    '<div class="field"><span class="lbl">Skidträning</span><div class="seg"><button class="chip" data-a="opt" data-k="snow" data-v="0" aria-pressed="'+(!S.snow)+'">Stakmaskin</button><button class="chip" data-a="opt" data-k="snow" data-v="1" aria-pressed="'+S.snow+'">Snö i spåren</button></div></div>'+
+    '<div class="field"><span class="lbl">Cykling</span><div class="seg"><button class="chip" data-a="opt" data-k="bike" data-v="1" aria-pressed="'+S.bikeIndoor+'">Gymcykel</button><button class="chip" data-a="opt" data-k="bike" data-v="0" aria-pressed="'+(!S.bikeIndoor)+'">Ute på vägen</button></div></div>'+
+    '<p class="sub">Valet ändrar beskrivning och längd på skid- och cykelpassen i planen.</p></div></section>';
+  var totMin=0;A.logs.forEach(function(l){totMin+=l.min;});
+  h+='<section class="card"><div class="sec-h"><h2 class="h2">Framsteg</h2></div><div class="stats"><div><b>'+st.done+'<small style="font-size:18px;color:var(--ink-2);font-weight:600"> / '+st.total+'</small></b><span>pass klara denna vecka</span></div><div><b>'+fmtNum(totMin/60,1)+'</b><span>timmar loggat</span></div><div><b>'+A.logs.length+'</b><span>pass i loggen</span></div></div>'+
+    '<hr style="border:0;border-top:1px solid var(--line);margin:16px 0 12px"><div class="sec-h"><div class="eyebrow">Volym per vecka</div><div class="chartnav"><button class="btn sm" data-a="chartnav" data-d="-4" aria-label="Tidigare veckor">‹</button><button class="btn sm" data-a="chartnav" data-d="4" aria-label="Senare veckor">›</button></div></div><div class="chartbox" id="chartbox"></div></section>';
+  h+='<section class="card"><div class="sec-h"><h2 class="h2">Säsongen</h2></div>'+seasonHTML()+'</section>';
+  return h;
+}
+function seasonHTML(){
+  var s0=PLAN.start,e0=PLAN.races[PLAN.races.length-1].date,span=Math.max(1,diffDays(e0,s0));
+  var pos=function(d){return clamp(diffDays(d,s0)/span*100,0,100);};
+  var tpos=pos(TD),h='<div class="season"><div class="track"></div><div class="fill" style="width:'+tpos+'%"></div>';
+  PLAN.races.forEach(function(r,i){
+    var up=i%2===0,end=pos(r.date)>92;
+    h+='<div class="mk '+(up?'up':'dn')+(end?' end':'')+'" style="left:'+pos(r.date)+'%;--c:'+SP[r.sport].c+'"><span>'+r.short+'</span></div>';
+  });
+  h+='<div class="me" style="left:'+tpos+'%" title="Idag"></div></div>';
+  h+='<div class="rrows">'+PLAN.races.map(function(r,i){
+    var dd=diffDays(r.date,TD);
+    return '<div class="rrow"><div><b>'+(i+1)+'. '+r.name+'</b><div class="sub">'+fmtDateFull(r.date)+(r.tentative?' · bekräfta datum':'')+'</div><div class="sub">'+r.what+' · mål '+r.goalTxt+' · måltempo '+goalPace(r)+'</div></div><div class="d">'+(dd>=0?dd:'–')+'<small>'+(dd>=0?'dagar':'avklarat')+'</small></div></div>';
+  }).join('')+'</div>';
+  return h;
+}
+function renderChart(){
+  var box=$('#chartbox');if(!box)return;
+  var n=PLAN.weeks.length,ci=curIdx(),N=Math.min(12,n);
+  if(ui.chartFrom==null)ui.chartFrom=clamp(ci-8,0,n-N);
+  ui.chartFrom=clamp(ui.chartFrom,0,n-N);
+  if(ui.sel==null)ui.sel=ci;
+  var from=ui.chartFrom,ws=PLAN.weeks.slice(from,from+N);
+  var data=ws.map(function(w){return {w:w,pl:w.plannedMin,ac:A.actual[w.i]||0};});
+  var maxM=Math.max(60,Math.max.apply(null,data.map(function(d){return Math.max(d.pl,d.ac);})));
+  var maxH=maxM/60,step=maxH<=4?1:(maxH<=8?2:(maxH<=16?4:5)),top=Math.ceil(maxH/step)*step;
+  var W=360,H=200,ml=30,mr=6,mt=16,mb=36,iw=W-ml-mr,ih=H-mt-mb,bw=iw/N;
+  var y=function(m){return mt+ih-(m/60)/top*ih;};
+  var svg='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Planerad och loggad träningstid per vecka">';
+  svg+='<text x="'+(ml-6)+'" y="9" text-anchor="end">tim</text>';
+  for(var t=0;t<=top;t+=step){svg+='<line class="grid" x1="'+ml+'" x2="'+(W-mr)+'" y1="'+y(t*60)+'" y2="'+y(t*60)+'"/><text x="'+(ml-6)+'" y="'+(y(t*60)+3.5)+'" text-anchor="end">'+t+'</text>';}
+  data.forEach(function(d,i){
+    var x=ml+i*bw,isC=d.w.i===ci,isSel=d.w.i===ui.sel;
+    if(isC)svg+='<rect class="curbg" x="'+x+'" y="'+mt+'" width="'+bw+'" height="'+(ih+mb-6)+'" rx="4"/>';
+    if(d.pl>0)svg+='<rect class="planned" x="'+(x+bw*0.12)+'" y="'+y(d.pl)+'" width="'+(bw*0.76)+'" height="'+(mt+ih-y(d.pl))+'" rx="3"/>';
+    if(d.ac>0)svg+='<rect class="actual" x="'+(x+bw*0.3)+'" y="'+y(d.ac)+'" width="'+(bw*0.4)+'" height="'+Math.max(2,mt+ih-y(d.ac))+'" rx="3"/>';
+    svg+='<text class="'+(isC?'cur-l':'')+'" x="'+(x+bw/2)+'" y="'+(mt+ih+14)+'" text-anchor="middle">v'+isoWeek(d.w.start)+'</text>';
+    if(d.w.phase==='race')svg+='<circle class="raceflag" cx="'+(x+bw/2)+'" cy="'+(mt+ih+25)+'" r="4"/>';
+    if(isSel)svg+='<rect class="sel" x="'+(x+1)+'" y="'+mt+'" width="'+(bw-2)+'" height="'+(ih+mb-6)+'" rx="4"/>';
+    svg+='<rect x="'+x+'" y="'+mt+'" width="'+bw+'" height="'+(ih+mb)+'" fill="transparent" data-a="wk" data-i="'+d.w.i+'" style="cursor:pointer"/>';
+  });
+  svg+='</svg>';
+  var sw=PLAN.weeks[ui.sel]||PLAN.weeks[ci],st=weekStats(sw.i);
+  var done=A.logs.filter(function(l){return weekIdx(l.date)===sw.i;}).length;
+  box.innerHTML=svg+'<div class="legend"><span><i style="background:var(--plan-fill);border:1px solid var(--line-strong)"></i>Planerat</span><span><i style="background:var(--bar)"></i>Loggat</span><span><i style="background:var(--yellow);border-radius:50%;width:10px;border:1px solid var(--yellow-ink)"></i>Tävlingsvecka</span></div>'+
+    '<div class="readout"><b>v'+isoWeek(sw.start)+'</b> · '+rangeLabel(sw.start)+' · '+esc(sw.label)+'<br>Planerat '+fmtMin(sw.plannedMin)+' · loggat '+fmtMin(st.actual)+' ('+done+' pass)</div>';
+}
+
+/* ---------- Plan ---------- */
+function blockOf(w){
+  if(w.phase==='bas')return {key:'bas',title:'Bas och teknik',sub:'Grundträning, stakmaskin och löpning inför Vasaloppet. Simning kommer tillbaka efter loppet'};
+  if(w.phase==='build')return {key:'b'+w.focus+w.nextRace.key,title:FOCUS_TITLE[w.focus]+' · '+w.nextRace.name,sub:''};
+  if(w.phase==='recovery')return {key:'rec'+w.i,title:'Återhämtning',sub:'Vila efter loppet'};
+  return {key:'r'+w.race.key,title:w.race.name+' · nedtrappning och lopp',sub:''};
+}
+function weekCard(w,ci){
+  var total=PLAN.maxWeek,pw=w.plannedMin/total*100;
+  var segs=Object.keys(w.bySport).map(function(k){return '<i style="flex:'+w.bySport[k]+';background:'+SP[k].c+'"></i>';}).join('');
+  var open=ui.open[w.i]===undefined?(w.i===ci):ui.open[w.i];
+  var chip=w.phase==='race'?'<span class="pill now">'+esc(w.label)+'</span>':(w.phase==='taper'?'<span class="pill info">'+esc(w.label)+'</span>':((w.rest||w.phase==='recovery')?'<span class="pill good">'+esc(w.label)+'</span>':'<span class="pill">'+esc(w.label)+'</span>'));
+  var sc=w.sessions.filter(function(x){return !x.s.opt&&!x.skipped;}).length;
+  var body='';
+  if(open)body='<div class="wdays">'+stripHTML(w)+'<div class="days" style="margin-top:12px">'+w.sessions.slice().sort(sortSes).map(sesRow).join('')+'</div><p class="sub" style="margin-top:10px">'+esc(w.tip)+'</p></div>';
+  return '<details class="wk'+(w.i===ci?' cur':'')+(w.i<ci?' past':'')+'" data-i="'+w.i+'"'+(open?' open':'')+'><summary><div class="wl"><b>v'+isoWeek(w.start)+'</b><span>'+rangeLabel(w.start)+'</span></div><div>'+chip+'<div class="segs" style="width:'+Math.max(8,pw)+'%">'+segs+'</div></div><div class="wr">'+fmtH(w.plannedMin)+'<div class="sub" style="font-weight:500">'+sc+' pass</div></div></summary>'+body+'</details>';
+}
+function renderPlan(){
+  var ci=curIdx(),h='<div class="stack">';
+  PLAN.maxWeek=Math.max.apply(null,PLAN.weeks.map(function(w){return w.plannedMin;}).concat([60]));
+  h+='<div><h1 class="h2" style="font-size:30px">Träningsplan</h1><p class="sub">'+PLAN.weeks.length+' veckor från '+fmtDate(PLAN.start)+' till '+fmtDate(PLAN.races[PLAN.races.length-1].date)+'. Varje vecka har en passlista, och du väljer själv vilken dag du kör vad. Vilovecka var fjärde vecka och nedtrappning före varje lopp.</p></div>';
+  h+='<div class="legendline">'+['lop','cyk','ski','sim','str'].map(function(k){return '<span>'+spDot(k)+SP[k].n+'</span>';}).join('')+'</div>';
+  h+='<button class="btn" data-a="gocur">Gå till nuvarande vecka</button>';
+  var last=null;
+  PLAN.weeks.forEach(function(w){
+    var b=blockOf(w);
+    if(b.key!==last){
+      var cnt=PLAN.weeks.filter(function(x){return blockOf(x).key===b.key;});
+      var s=cnt[0],e=cnt[cnt.length-1];
+      h+='<div><h2 class="blockh">'+esc(b.title)+'</h2><p class="sub">v'+isoWeek(s.start)+(cnt.length>1?'–v'+isoWeek(e.start):'')+' · '+cnt.length+(cnt.length===1?' vecka':' veckor')+(b.sub?' · '+esc(b.sub):'')+'</p></div>';
+      last=b.key;
+    }
+    h+=weekCard(w,ci);
+  });
+  return h+'</div>';
+}
+
+/* ---------- Logg ---------- */
+function renderLog(){
+  var h='<div class="stack"><div><h1 class="h2" style="font-size:30px">Logg</h1><p class="sub">Dina genomförda pass. Tryck på ett pass för att ändra eller ta bort det.</p></div>';
+  if(!A.logs.length)h+='<div class="empty"><b>Inget loggat än</b><br>Tryck på <b>Logga pass</b> direkt efter ditt första pass. Tid, känsla och ansträngning räcker.</div>';
+  else {
+    h+=A.logs.slice().reverse().map(function(l){
+      var ses=A.sessOf[l.id],dt=parse(l.date);
+      var dist=l.km>0?(l.sport==='sim'?Math.round(l.km*1000)+' m':fmtNum(l.km,1)+' km'):'';
+      var cmp=ses?esc(ses.s.title)+' ('+A.sm[ses.id].done+' av '+ses.s.min+' min)':'Utanför planen';
+      var feel=FEELS.filter(function(f){return f[0]===l.feel;})[0];
+      return '<button class="logrow" data-a="editlog" data-id="'+l.id+'"><div><div class="t">'+spDot(l.sport)+' '+SP[l.sport].n+' · '+fmtMin(l.min)+(dist?' · '+dist:'')+'</div><div class="m">'+fmtDate(dt)+' · '+cmp+(feel?' · '+feel[1]:'')+(l.shin?' · ömma benhinnor':'')+'</div>'+(l.note?'<div class="n">'+esc(l.note)+'</div>':'')+'</div><div class="rpebadge">'+(l.rpe||'–')+'<small>RPE</small></div></button>';
+    }).join('');
+  }
+  return h+'</div>';
+}
+
+/* ---------- Feedback ---------- */
+function renderCoach(){
+  var ci=curIdx(),h='<div class="stack"><div><h1 class="h2" style="font-size:30px">Feedback</h1><p class="sub">Jämförelse mellan det du loggat och planen.</p></div>';
+  h+=computeFeedback().map(fbCard).join('');
+  h+='<section class="card"><div class="sec-h"><h2 class="h2">Justera planen</h2></div><p class="sub">Justeringen gäller från den här veckan och framåt. Volym: <b>'+Math.round(S.volMult*100)+' %</b> · Långpass: <b>'+Math.round(S.longMult*100)+' %</b></p><div class="btnrow" style="margin-top:12px"><button class="btn" data-a="fb" data-fa="volDown">Lättare −10 %</button><button class="btn" data-a="fb" data-fa="volUp">Tuffare +10 %</button></div><div class="btnrow" style="margin-top:8px"><button class="btn" data-a="fb" data-fa="longDown">Kortare långpass −15 %</button><button class="btn" data-a="fb" data-fa="resetAdj">Återställ allt</button></div></section>';
+  var rows='';
+  for(var k=Math.max(0,ci-3);k<=ci;k++){
+    var w=PLAN.weeks[k],st=weekStats(k);
+    rows+='<tr><td>v'+isoWeek(w.start)+(k===ci?' (nu)':'')+'</td><td>'+fmtMin(st.planned)+'</td><td>'+fmtMin(st.actual)+'</td><td>'+st.done+'/'+st.total+'</td><td>'+(st.rpe?fmtNum(st.rpe,1):'–')+'</td></tr>';
+  }
+  h+='<section class="card"><div class="sec-h"><h2 class="h2">Senaste veckorna</h2></div><div class="tablewrap"><table><thead><tr><th>Vecka</th><th>Plan</th><th>Loggat</th><th>Pass</th><th>RPE</th></tr></thead><tbody>'+rows+'</tbody></table></div></section>';
+  return h+'</div>';
+}
+
+/* ================= rendering ================= */
+function render(keepScroll){
+  var y=window.scrollY,h='';
+  if(ui.tab==='home')h=renderHome();else if(ui.tab==='plan')h=renderPlan();else if(ui.tab==='log')h=renderLog();else h=renderCoach();
+  $('#view').innerHTML=h;
+  document.querySelectorAll('.tab').forEach(function(b){if(b.dataset.v===ui.tab)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
+  if(ui.tab==='home')renderChart();
+  window.scrollTo(0,keepScroll?y:0);
+}
+function refresh(keepScroll){
+  T=iso(nowDate());TD=nowDate();
+  PLAN=buildPlan();A=analyze();
+  render(keepScroll);
+}
+function setTab(t){ui.tab=t;S.tab=t;save();render(false);}
+
+/* ================= sheets ================= */
+function openSheet(){var s=$('#sheet');s.hidden=false;document.body.classList.add('lock');$('#fabwrap').style.display='none';$('#panel').scrollTop=0;try{$('#panel').focus({preventScroll:true});}catch(e){}}
+function closeSheet(){ui.sheet=null;form=null;ui.confirmDel=false;ui.confirmClear=false;$('#sheet').hidden=true;document.body.classList.remove('lock');$('#fabwrap').style.display='';}
+function setPanel(html,keep){var p=$('#panel'),sc=p.scrollTop;p.innerHTML=html;if(keep)p.scrollTop=sc;}
+function afterChange(msg){save();refresh(true);if(msg)toast(msg);}
+
+function planOptions(f){
+  var ci=curIdx(),opts=['<option value="">Utanför planen</option>'],seen={};
+  for(var k=Math.max(0,ci-1);k<=Math.min(PLAN.weeks.length-1,ci+1);k++){
+    PLAN.weeks[k].sessions.slice().sort(sortSes).forEach(function(x){
+      if(x.skipped)return;
+      var st=statOf(x);
+      if(st.k==='done'&&x.id!==f.planId)return;
+      if(k===ci+1&&x.id!==f.planId)return;
+      seen[x.id]=1;
+      opts.push('<option value="'+x.id+'"'+(f.planId===x.id?' selected':'')+'>'+SP[x.s.sport].n+' · '+esc(x.s.title)+' · '+x.s.min+' min'+(x.date?' · '+dayName(x.date):'')+(st.k==='part'?' (delvis)':'')+'</option>');
+    });
+  }
+  if(f.planId&&!seen[f.planId]&&PLAN.byId[f.planId]){var y=PLAN.byId[f.planId];opts.push('<option value="'+y.id+'" selected>'+esc(y.s.title)+'</option>');}
+  return opts.join('');
+}
+function applyPlan(id){
+  form.planId=id||'';
+  if(!id)return;
+  var x=PLAN.byId[id];if(!x)return;
+  var st=statOf(x);
+  form.sport=x.s.sport;
+  form.min=String(st.k==='part'?Math.max(5,x.s.min-st.done):x.s.min);
+  form.dist='';
+  if(x.s.type==='lopp'){var r=RACES.filter(function(q){return q.key===x.s.race;})[0];form.dist=r.sport==='sim'?'3000':String(r.km);}
+}
+function logFormHTML(){
+  var f=form,hasDist=['lop','cyk','ski','sim'].indexOf(f.sport)>=0;
+  var ses=f.planId&&PLAN.byId[f.planId],planned=ses&&ses.s;
+  var ph=hasDist&&planned&&planned.type!=='lopp'?estKm(f.sport,planned.min,planned.type):'';
+  var mins=num(f.min);
+  var h='<div class="sh-head"><h2 class="h2" style="font-size:28px">'+(f.id?'Ändra pass':'Logga pass')+'</h2><button class="btn sm" data-a="close">Stäng</button></div>';
+  h+='<div class="field"><label for="f-plan">Vilket planerat pass?</label><select id="f-plan" data-f="planId">'+planOptions(f)+'</select></div>';
+  h+='<div class="field"><span class="lbl">Gren</span><div class="chips">'+Object.keys(SP).map(function(k){return '<button class="chip" data-a="sport" data-v="'+k+'" aria-pressed="'+(f.sport===k)+'">'+spDot(k)+SP[k].n+'</button>';}).join('')+'</div></div>';
+  h+='<div class="row2"><div class="field"><label for="f-date">Datum</label><input id="f-date" type="date" data-f="date" value="'+f.date+'" max="'+T+'"></div>';
+  h+='<div class="field"><label for="f-min">Tid (minuter)</label><div class="stepper"><button data-a="step" data-d="-5" aria-label="5 minuter mindre">−</button><input id="f-min" inputmode="numeric" data-f="min" value="'+esc(f.min)+'" placeholder="0"><button data-a="step" data-d="5" aria-label="5 minuter mer">+</button></div><div class="hint" id="f-minh">'+(mins>0?fmtMin(mins):'Ange tid i minuter')+'</div></div></div>';
+  if(hasDist)h+='<div class="field"><label for="f-dist">'+(f.sport==='sim'?'Distans (meter)':'Distans (km, valfritt)')+'</label><input id="f-dist" inputmode="decimal" data-f="dist" value="'+esc(f.dist)+'" placeholder="'+(ph||(f.sport==='sim'?'t.ex. 1500':'t.ex. 12,5'))+'"></div>';
+  h+='<div class="field"><span class="lbl">Upplevd ansträngning (1–10)</span><div class="rpe">'+[1,2,3,4,5,6,7,8,9,10].map(function(n){return '<button data-a="rpe" data-v="'+n+'" aria-pressed="'+(f.rpe===n)+'">'+n+'</button>';}).join('')+'</div><div class="hint">'+(f.rpe?f.rpe+' = '+RPE_TXT[f.rpe]+(planned&&planned.rpe?' (planerat '+planned.rpe+')':''):'1 = mycket lätt · 5 = medel · 10 = max')+'</div></div>';
+  h+='<div class="field"><span class="lbl">Hur kändes det?</span><div class="chips">'+FEELS.map(function(x){return '<button class="chip" data-a="feel" data-v="'+x[0]+'" aria-pressed="'+(f.feel===x[0])+'">'+x[1]+'</button>';}).join('')+'</div></div>';
+  if(f.sport==='lop'||f.sport==='ski')h+='<label class="check"><input type="checkbox" data-f="shin" '+(f.shin?'checked':'')+'>Ömmar i benhinnorna</label>';
+  h+='<div class="field"><label for="f-note">Anteckning (valfritt)</label><textarea id="f-note" data-f="note" rows="3" placeholder="Hur gick det? Något att komma ihåg?">'+esc(f.note)+'</textarea></div>';
+  h+='<div class="err" id="f-err" role="alert"></div><button class="btn yellow big" data-a="save">Spara pass</button>';
+  if(f.id){
+    h+=ui.confirmDel?'<div class="card"><p style="margin-bottom:10px"><b>Ta bort passet?</b> Det går inte att ångra.</p><div class="btnrow"><button class="btn danger" data-a="delyes">Ja, ta bort</button><button class="btn" data-a="delno">Avbryt</button></div></div>':'<button class="btn danger" data-a="del">Ta bort passet</button>';
+  }
+  return h;
+}
+function openLog(planId){
+  form={id:'',created:0,date:T,sport:'lop',planId:'',min:'',dist:'',rpe:null,feel:'',shin:false,note:''};
+  var pid=planId||'';
+  if(!pid){var ts=sessionsOn(T).filter(function(x){return statOf(x).k!=='done';}).sort(sortSes)[0];if(ts)pid=ts.id;}
+  if(pid)applyPlan(pid);
+  ui.sheet='log';setPanel(logFormHTML());openSheet();
+}
+function openLogSport(sp){openLog('');form.sport=sp;form.planId='';form.min='';setPanel(logFormHTML());}
+function openEdit(id){
+  var l=S.logs.filter(function(x){return x.id===id;})[0];if(!l)return;
+  var ses=A.sessOf[l.id];
+  form={id:l.id,created:l.created,date:l.date,sport:l.sport,planId:l.planId||(ses?ses.id:''),min:String(l.min),dist:l.km>0?(l.sport==='sim'?String(Math.round(l.km*1000)):String(l.km).replace('.',',')):'',rpe:l.rpe||null,feel:l.feel||'',shin:!!l.shin,note:l.note||''};
+  ui.sheet='log';ui.confirmDel=false;setPanel(logFormHTML());openSheet();
+}
+function saveForm(){
+  var f=form,min=Math.round(num(f.min));
+  var err=function(t){var e=$('#f-err');if(e)e.textContent=t;};
+  if(!(min>0)){err('Fyll i hur många minuter passet tog.');return;}
+  var d=num(f.dist);if(isNaN(d)||d<=0)d=0;
+  var km=f.sport==='sim'?(d>10?d/1000:d):d;
+  var rec={id:f.id||uid(),date:f.date,sport:f.sport,min:min,km:km,rpe:f.rpe||0,feel:f.feel||'',shin:!!f.shin,note:(f.note||'').trim(),planId:f.planId||'',created:f.created||Date.now()};
+  if(f.id){S.logs=S.logs.map(function(x){return x.id===f.id?rec:x;});}else S.logs.push(rec);
+  A=analyze();
+  var ses=A.sessOf[rec.id];
+  if(ses&&!ses.date&&ses.s.type!=='lopp'){var di=diffDays(parse(rec.date),PLAN.weeks[ses.w].start);if(di>=0&&di<7){S.assign[ses.id]=rec.date;delete S.restDays[rec.date];}}
+  save();PLAN=buildPlan();A=analyze();
+  var fb=logFeedback(rec);
+  var ci=curIdx(),w=PLAN.weeks[ci],left=w.sessions.filter(function(x){return !x.skipped&&!x.s.opt&&statOf(x).k!=='done';}),leftKey=left.filter(function(x){return x.key;}).length;
+  var nxt=left.filter(function(x){return x.date&&x.date>T;}).sort(function(a,b){return a.date<b.date?-1:1;})[0];
+  var h='<div class="sh-head"><h2 class="h2" style="font-size:28px">Sparat</h2></div><p class="sub">'+SP[rec.sport].n+' · '+fmtMin(rec.min)+(rec.rpe?' · RPE '+rec.rpe:'')+'</p>';
+  h+=fb.map(function(x){return '<div class="fbline '+x.lvl+'"><b>'+{good:'Bra',warn:'Obs',info:'Info'}[x.lvl]+'</b><span>'+esc(x.t)+'</span></div>';}).join('');
+  h+='<p><b>Kvar i veckan:</b> '+left.length+(left.length===1?' pass':' pass')+(leftKey?' ('+leftKey+' nyckelpass)':'')+(nxt?'. Nästa planerade: '+dayName(nxt.date)+' · '+esc(nxt.s.title):'')+'</p>';
+  h+='<button class="btn primary big" data-a="close">Klart</button>';
+  ui.sheet='result';form=null;setPanel(h);$('#panel').scrollTop=0;
+  refresh(true);
+}
+function sessionSheet(id){
+  var ses=PLAN.byId[id];if(!ses)return;
+  var s=ses.s,st=statOf(ses),w=PLAN.weeks[ses.w];
+  var h='<div class="sh-head"><div class="eyebrow">Vecka '+isoWeek(w.start)+' · '+rangeLabel(w.start)+'</div><button class="btn sm" data-a="close">Stäng</button></div>';
+  h+='<h2 class="h2" style="font-size:28px">'+esc(s.title)+'</h2><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">'+spDot(s.sport)+'<b>'+SP[s.sport].n+'</b><span class="pill">'+TY[s.type]+'</span>'+(ses.key?'<span class="pill now">Nyckelpass</span>':'')+(s.opt?'<span class="pill info">Valfritt</span>':'')+(ses.swapped?'<span class="pill warn">Ersatt löpning</span>':'')+'</div>';
+  h+='<div class="stats"><div><b>'+fmtMin(s.min).replace(/ min$/,'<small style="font-size:16px"> min</small>').replace(/ tim$/,'<small style="font-size:16px"> tim</small>').replace(' tim ','<small style="font-size:16px"> tim </small>')+'</b><span>längd</span></div><div><b>'+(s.type==='lopp'?'–':s.rpe)+'</b><span>RPE · '+inten(s.rpe).toLowerCase()+'</span></div><div><b style="font-size:22px;padding-top:8px">'+(estKm(s.sport,s.min,s.type)||'–').replace('ca ','')+'</b><span>ungefärlig distans</span></div></div>';
+  h+='<p class="desc">'+esc(s.desc)+'</p>';
+  if(st.k!=='none')h+='<div class="fbline '+(st.k==='done'?'good':'info')+'"><b>'+(st.k==='done'?'Klar':'Delvis')+'</b><span>Loggat '+st.done+' av '+s.min+' min</span></div>';
+  if(s.type!=='lopp'&&!ses.skipped){
+    h+='<div class="field"><span class="lbl">Vilken dag kör du det?</span><div class="dgrid">';
+    for(var d=0;d<7;d++){var date=iso(addDays(w.start,d));h+='<button data-a="assign" data-id="'+id+'" data-date="'+date+'" data-close="1" aria-pressed="'+(ses.date===date)+'" class="'+(ses.sug===d?'sug':'')+'"><b>'+DOW[d]+'</b>'+parse(date).getDate()+'</button>';}
+    h+='</div><div class="hint">Gul prick = förslag i planen. Du kan lägga flera pass på samma dag.</div>'+(ses.date?'<button class="btn sm" data-a="unassign" data-id="'+id+'" data-close="1">Ingen dag vald</button>':'')+'</div>';
+  } else if(s.type==='lopp')h+='<p class="sub">Loppet ligger på '+fmtDateFull(parse(ses.date))+'.</p>';
+  if(!ses.skipped&&st.k!=='done')h+='<button class="btn yellow big" data-a="quick" data-id="'+id+'">Klart som planerat</button><button class="btn big" data-a="log" data-plan="'+id+'">Logga med detaljer</button>';
+  var acts='';
+  if(s.type!=='lopp'){
+    acts+=ses.skipped?'<button class="btn" data-a="unskip" data-id="'+id+'">Ta med passet igen</button>':'<button class="btn" data-a="skip" data-id="'+id+'">Hoppa över</button>';
+    if(s.sport==='lop'&&!ses.swapped&&!ses.skipped)acts+='<button class="btn" data-a="swapses" data-id="'+id+'">Byt till cykel</button>';
+    if(ses.swapped)acts+='<button class="btn" data-a="unswap" data-id="'+id+'">Tillbaka till löpning</button>';
+  }
+  if(acts)h+='<div class="btnrow">'+acts+'</div>';
+  ui.sheet='session';setPanel(h);openSheet();
+}
+function daySheet(date){
+  var wi=weekIdx(date);if(wi<0)return;
+  var w=PLAN.weeks[wi],dt=parse(date),ss=sessionsOn(date).sort(sortSes);
+  var free=w.sessions.filter(function(x){return !x.date&&!x.skipped&&statOf(x).k!=='done'&&x.s.type!=='lopp';}).sort(sortSes);
+  var h='<div class="sh-head"><h2 class="h2" style="font-size:28px">'+DOWL[(dt.getDay()+6)%7]+' '+dt.getDate()+' '+MON[dt.getMonth()]+'</h2><button class="btn sm" data-a="close">Stäng</button></div>';
+  if(S.restDays[date])h+='<div class="fbline info"><b>Vila</b><span>Dagen är markerad som vilodag.</span></div>';
+  if(ss.length){
+    h+='<div class="subh">Valda pass</div><div class="stack" style="gap:8px">'+ss.map(function(x){return sesRow(x)+(x.s.type!=='lopp'?'<button class="btn sm" data-a="unassign" data-id="'+x.id+'" data-stay="'+date+'">Ta bort från dagen</button>':'');}).join('')+'</div>';
+    var hard=ss.filter(function(x){return x.s.type==='int'||x.s.type==='lopp'||x.s.long;}).length;
+    if(ss.length>=2)h+='<div class="fbline '+(hard>=2?'warn':'info')+'"><b>'+(hard>=2?'Obs':'Info')+'</b><span>'+(hard>=2?'Två tunga pass samma dag. Går det, lägg det ena en annan dag. Annars: kör det hårdaste först och det andra riktigt lugnt.':'Två pass samma dag går bra så länge det ena är lugnt. Logga dem var för sig.')+'</span></div>';
+  } else h+='<p class="sub">Inga pass valda för dagen.</p>';
+  if(free.length){
+    h+='<div class="subh">Lägg till på dagen</div><div>'+free.map(function(x){return '<div class="qrow"><div><b>'+esc(x.s.title)+(x.key?' <span class="pill now">Nyckel</span>':'')+'</b><span>'+SP[x.s.sport].n+' · '+fmtMin(x.s.min)+(x.s.opt?' · valfritt':'')+'</span></div><button class="btn sm primary" data-a="assign" data-id="'+x.id+'" data-date="'+date+'" data-stay="'+date+'">Lägg till</button></div>';}).join('')+'</div>';
+  }
+  h+='<button class="btn" data-a="restday" data-date="'+date+'" data-stay="'+date+'">'+(S.restDays[date]?'Ångra vilodag':'Markera som vilodag')+'</button>';
+  ui.sheet='day';ui.dayDate=date;setPanel(h);openSheet();
+}
+function openSettings(){
+  var h='<div class="sh-head"><h2 class="h2" style="font-size:28px">Inställningar</h2><button class="btn sm" data-a="close">Stäng</button></div>';
+  h+='<section class="card stack"><div><div class="h2" style="font-size:20px">Loppdatum</div><p class="sub">Ändrar du ett datum byggs planen om. Dina loggade pass ligger kvar.</p></div>';
+  PLAN.races.forEach(function(r){
+    h+='<div class="field"><label for="r-'+r.key+'">'+r.name+(r.tentative?' (bekräfta datum)':'')+'</label><input id="r-'+r.key+'" type="date" data-race="'+r.key+'" value="'+S.races[r.key]+'"></div>';
+  });
+  h+='<p class="sub">Vasaloppet och Vätternrundan är hämtade från arrangörernas datum. Vansbrosimningen och Lidingöloppet ska du dubbelkolla på arrangörens sida när 2027 års datum är låsta.</p></section>';
+  h+='<section class="card stack"><div><div class="h2" style="font-size:20px">Säkerhetskopia</div><p class="sub">Datan sparas i den här webbläsaren. Kopiera texten nedan och spara den någonstans, så kan du läsa in den igen på en annan enhet.</p></div>';
+  h+='<div class="field"><label for="bk">Din data</label><textarea id="bk" class="mono" rows="4" readonly>'+esc(JSON.stringify(S))+'</textarea></div><button class="btn" data-a="copybk">Kopiera</button>';
+  h+='<div class="field"><label for="imp">Läs in kopia</label><textarea id="imp" class="mono" rows="3" placeholder="Klistra in sparad text här"></textarea></div><div class="err" id="imperr" role="alert"></div><button class="btn" data-a="import">Läs in</button></section>';
+  h+='<section class="card stack"><div class="h2" style="font-size:20px">Rensa allt</div>';
+  h+=ui.confirmClear?'<p><b>Ta bort alla pass och inställningar?</b> Det går inte att ångra.</p><div class="btnrow"><button class="btn danger" data-a="clearyes">Ja, rensa allt</button><button class="btn" data-a="clearno">Avbryt</button></div>':'<button class="btn danger" data-a="clear">Rensa all data</button>';
+  h+='</section>';
+  if(!storageOk)h+='<div class="fbline warn"><b>Obs</b><span>Webbläsaren blockerar lagring. Datan finns bara kvar tills du stänger sidan, så kopiera säkerhetskopian ovan.</span></div>';
+  ui.sheet='settings';setPanel(h);openSheet();
+}
+
+/* ================= åtgärder ================= */
+function setAdj(v,l){S.volMult=clamp(Math.round(v*100)/100,0.6,1.3);S.longMult=clamp(Math.round(l*100)/100,0.6,1.2);S.adjFrom=T;save();}
+function doAction(a,v){
+  if(a==='dismiss'){S.dismissed[v]=iso(addDays(TD,7));afterChange('Dolt i 7 dagar');return;}
+  if(a==='volDown'){setAdj(S.volMult*0.9,S.longMult);afterChange('Volymen sänkt till '+Math.round(S.volMult*100)+' %');return;}
+  if(a==='volUp'){setAdj(S.volMult*1.1,S.longMult);afterChange('Volymen höjd till '+Math.round(S.volMult*100)+' %');return;}
+  if(a==='longDown'){setAdj(S.volMult,S.longMult*0.85);afterChange('Långpassen sänkta till '+Math.round(S.longMult*100)+' %');return;}
+  if(a==='resetAdj'){S.volMult=1;S.longMult=1;S.adjFrom='';S.swap={};afterChange('Planen är återställd');return;}
+  if(a==='restNext'){
+    var any=sessionsOn(T).some(function(x){return statOf(x).k!=='none';})||A.logs.some(function(l){return l.date===T;});
+    var date=any?iso(addDays(TD,1)):T;
+    sessionsOn(date).forEach(function(x){delete S.assign[x.id];});
+    S.restDays[date]=true;afterChange(fmtDate(parse(date))+' är vilodag');return;
+  }
+  if(a==='swapRun'){
+    var c=0;PLAN.weeks[curIdx()].sessions.forEach(function(x){if(x.s.sport==='lop'&&x.s.type!=='lopp'&&statOf(x).k==='none'&&!x.skipped){S.swap[x.id]='cyk';c++;}});
+    afterChange(c?c+' löppass byttes mot cykel':'Inga kommande löppass att byta');return;
+  }
+  if(a==='logSim'){openLogSport('sim');return;}
+}
+function assign(id,date){
+  S.assign[id]=date;delete S.restDays[date];
+}
+
+/* ================= events ================= */
+document.addEventListener('click',function(e){
+  var t=e.target.closest('[data-a]');if(!t)return;
+  var a=t.dataset.a,id=t.dataset.id;
+  if(a==='tab'){setTab(t.dataset.v);}
+  else if(a==='log'){openLog(t.dataset.plan||'');}
+  else if(a==='editlog'){openEdit(t.dataset.id);}
+  else if(a==='session'){sessionSheet(id);}
+  else if(a==='day'){daySheet(t.dataset.date);}
+  else if(a==='close'){closeSheet();}
+  else if(a==='settings'){openSettings();}
+  else if(a==='sport'){var ns=t.dataset.v;if((form.sport==='sim')!==(ns==='sim'))form.dist='';form.sport=ns;setPanel(logFormHTML(),true);}
+  else if(a==='rpe'){var v=Number(t.dataset.v);form.rpe=form.rpe===v?null:v;setPanel(logFormHTML(),true);}
+  else if(a==='feel'){form.feel=form.feel===t.dataset.v?'':t.dataset.v;setPanel(logFormHTML(),true);}
+  else if(a==='step'){var cur=Math.round(num(form.min))||0;form.min=String(Math.max(0,cur+Number(t.dataset.d)));var inp=$('#f-min');if(inp)inp.value=form.min;var hh=$('#f-minh');if(hh)hh.textContent=num(form.min)>0?fmtMin(num(form.min)):'Ange tid i minuter';}
+  else if(a==='save'){saveForm();}
+  else if(a==='del'){ui.confirmDel=true;setPanel(logFormHTML(),true);}
+  else if(a==='delno'){ui.confirmDel=false;setPanel(logFormHTML(),true);}
+  else if(a==='delyes'){S.logs=S.logs.filter(function(x){return x.id!==form.id;});closeSheet();afterChange('Passet togs bort');}
+  else if(a==='fb'){doAction(t.dataset.fa,t.dataset.v);}
+  else if(a==='chartnav'){ui.chartFrom=(ui.chartFrom==null?0:ui.chartFrom)+Number(t.dataset.d);renderChart();}
+  else if(a==='wk'){ui.sel=Number(t.dataset.i);renderChart();}
+  else if(a==='gocur'){var ci=curIdx();ui.open[ci]=true;render(false);var el=document.querySelector('.wk[data-i="'+ci+'"]');if(el)el.scrollIntoView({block:'start'});}
+  else if(a==='assign'){
+    assign(id,t.dataset.date);save();PLAN=buildPlan();A=analyze();
+    if(t.dataset.stay){daySheet(t.dataset.stay);refresh(true);}
+    else{if(t.dataset.close)closeSheet();refresh(true);toast(dayName(t.dataset.date)+' valt');}
+  }
+  else if(a==='unassign'){
+    delete S.assign[id];save();PLAN=buildPlan();A=analyze();
+    if(t.dataset.stay){daySheet(t.dataset.stay);refresh(true);}
+    else{if(t.dataset.close)closeSheet();refresh(true);}
+  }
+  else if(a==='restday'){
+    var dd=t.dataset.date;
+    if(S.restDays[dd])delete S.restDays[dd];else{S.restDays[dd]=true;sessionsOn(dd).forEach(function(x){delete S.assign[x.id];});}
+    save();PLAN=buildPlan();A=analyze();
+    if(t.dataset.stay)daySheet(t.dataset.stay);
+    refresh(true);
+  }
+  else if(a==='skip'){S.skip[id]=true;delete S.assign[id];closeSheet();afterChange('Passet hoppades över');}
+  else if(a==='unskip'){delete S.skip[id];closeSheet();afterChange('Passet är med igen');}
+  else if(a==='swapses'){S.swap[id]='cyk';closeSheet();afterChange('Bytt till cykel');}
+  else if(a==='unswap'){delete S.swap[id];closeSheet();afterChange('Tillbaka till löpning');}
+  else if(a==='quick'){
+    var qs=PLAN.byId[id];if(qs){var qst=statOf(qs),qd=qs.date&&qs.date<=T?qs.date:T;
+      S.logs.push({id:uid(),date:qd,sport:qs.s.sport,min:Math.max(5,qs.s.min-qst.done),km:0,rpe:qs.s.rpe,feel:'',shin:false,note:'',planId:id,created:Date.now()});
+      if(!qs.date){S.assign[id]=qd;delete S.restDays[qd];}
+      closeSheet();afterChange('Loggat som planerat. Ändra under Logg om det blev annorlunda.');}
+  }
+  else if(a==='opt'){if(t.dataset.k==='snow')S.snow=t.dataset.v==='1';else S.bikeIndoor=t.dataset.v==='1';afterChange(t.dataset.k==='snow'?(S.snow?'Skidpassen följer nu snöspår':'Skidpassen följer nu stakmaskin'):(S.bikeIndoor?'Cykelpassen är nu på gymmet':'Cykelpassen är nu ute'));}
+  else if(a==='copybk'){var ta=$('#bk');ta.select();var ok=false;try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(ta.value).then(function(){toast('Kopierat');},function(){toast('Markerat, kopiera manuellt');});ok=true;}}catch(x){}if(!ok)toast('Markerat, kopiera manuellt');}
+  else if(a==='import'){
+    var raw=($('#imp').value||'').trim(),er=$('#imperr');
+    try{var o=JSON.parse(raw);if(!o||!Array.isArray(o.logs)||!o.races)throw new Error('x');S=normalize(o);save();closeSheet();refresh(false);toast('Data inläst');}
+    catch(x2){er.textContent='Texten gick inte att läsa. Kopiera hela säkerhetskopian och försök igen.';}
+  }
+  else if(a==='clear'){ui.confirmClear=true;openSettings();}
+  else if(a==='clearno'){ui.confirmClear=false;openSettings();}
+  else if(a==='clearyes'){S=normalize(null);save();ui.confirmClear=false;closeSheet();ui.chartFrom=null;ui.sel=null;ui.open={};refresh(false);toast('All data rensad');}
+});
+document.addEventListener('input',function(e){
+  var t=e.target;if(!form||!t.dataset||!t.dataset.f)return;
+  var k=t.dataset.f;
+  if(k==='min'){form.min=t.value;var hh=$('#f-minh');if(hh)hh.textContent=num(t.value)>0?fmtMin(num(t.value)):'Ange tid i minuter';}
+  else if(k==='dist')form.dist=t.value;
+  else if(k==='note')form.note=t.value;
+});
+document.addEventListener('change',function(e){
+  var t=e.target;
+  if(t.dataset&&t.dataset.race){
+    if(t.value){S.races[t.dataset.race]=t.value;save();PLAN=buildPlan();A=analyze();ui.chartFrom=null;ui.sel=null;render(true);toast('Planen byggdes om');}
+    return;
+  }
+  if(!form||!t.dataset||!t.dataset.f)return;
+  var k=t.dataset.f;
+  if(k==='planId'){applyPlan(t.value);setPanel(logFormHTML(),true);}
+  else if(k==='date'){if(t.value){form.date=t.value;}}
+  else if(k==='shin')form.shin=t.checked;
+});
+document.addEventListener('toggle',function(e){var t=e.target;if(t.classList&&t.classList.contains('wk')){var i=Number(t.dataset.i),was=ui.open[i];ui.open[i]=t.open;if(t.open&&!t.querySelector('.wdays')&&was!==true){render(true);}}},true);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('#sheet').hidden)closeSheet();});
+document.addEventListener('visibilitychange',function(){if(!document.hidden&&$('#sheet').hidden){var t2=iso(nowDate());if(t2!==T)refresh(true);}});
+
+refresh(false);
+window.__sk={get S(){return S;},get PLAN(){return PLAN;},get A(){return A;},refresh:refresh,computeFeedback:computeFeedback,save:save};
+})();
+</script>
+<script>
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
+</script>
+</body>
+</html>
